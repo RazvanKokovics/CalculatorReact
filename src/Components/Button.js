@@ -7,16 +7,18 @@ class Button extends Component{
     static propTypes = {
         name: PropTypes.string,
         clickHandler: PropTypes.func,
-      };
+    };
     
-      handleClick = () => {
+    handleClick = () => {
         this.props.clickHandler(this.props.name);
-      };
+    };
 
     render() {
         return (
-          <button title={this.props.name} className={this.props.class} onClick={this.props.clickHandler}>{this.props.children || this.props.name}</button>
+          	<button title={this.props.name} className={this.props.class} onClick={this.props.clickHandler}>
+				{this.props.children || this.props.name}
+			</button>
         );
-      }
+    }
 }
 export default Button

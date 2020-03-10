@@ -5,7 +5,6 @@ import History from "./History";
 import ButtonPanel from "./ButtonPanel";
 import ExpressionsPanel from "./ExpressionsPanel";
 import calculate from "../service/calculate";
-
 import './Calculator.css';
 
 class Calculator extends Component{
@@ -43,7 +42,6 @@ class Calculator extends Component{
     }
 
     keyPressed = event => {
-       // console.log(event.key);
         if(event.shiftKey && event.key === "+")
             this.setState(calculate(this.state, "+"))
         if(event.shiftKey && event.key === "*")
@@ -57,11 +55,9 @@ class Calculator extends Component{
         if(event.key === "-")
             this.setState(calculate(this.state, "-"))
         if(event.keyCode === 13)
-        this.setState(calculate(this.state, "="))
-        if("0123456789=".includes(event.key)){
-            //console.log(event.key);
+        	this.setState(calculate(this.state, "="))
+        if("0123456789=".includes(event.key))
             this.setState(calculate(this.state, event.key));
-        }
     }
 
     handleExpressionClick = expressionString => {

@@ -58,7 +58,9 @@ class ExpressionsPanel extends Component{
 
         const renderPageNumbers = pageNumbers.map(number => {
             return (
-                <div key={number} id={number} className="pagination-number" onClick={this.pageClick.bind(this)}>{number}</div>
+                <div key={number} id={number} className="pagination-number" onClick={this.pageClick.bind(this)}>
+                    {number}
+                </div>
             );
         });
 
@@ -68,9 +70,13 @@ class ExpressionsPanel extends Component{
                 {renderExpressions}
                 <div id="center">
                     <div id="pagination">
-                        <div className="pagination-number" onClick={this.previousPageClick.bind(this)}><FaAngleLeft/></div>
+                        <div className="pagination-number" onClick={this.previousPageClick.bind(this)}>
+                            <FaAngleLeft/>
+                        </div>
                         {renderPageNumbers}
-                        <div className="pagination-number" onClick={this.nextPageClick.bind(this, numberOfPages)}><FaAngleRight/></div>
+                        <div className="pagination-number" onClick={this.nextPageClick.bind(this, numberOfPages)}>
+                            <FaAngleRight/>
+                        </div>
                     </div>
                 </div>
             </div>

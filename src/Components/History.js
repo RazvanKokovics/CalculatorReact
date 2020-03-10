@@ -7,9 +7,12 @@ class History extends Component{
     static propTypes = {
         value: PropTypes.string,
     };
+
     render(){
         return(
-            <div id="history">{this.props.value}</div>
+            <div id="history">
+                {this.props.value}
+            </div>
         );
     }
 }

@@ -60,7 +60,6 @@ class ButtonPanel extends Component{
             return(
                 <div className="button-panel">
                     {hideShowButton}
-                    
                     <ButtonContainer class="two-button-container">
                         <Button clickHandler={() => this.handleClick("Undo")} name="Undo" class="grid-item small-button btn grey1"><FaUndo/></Button>
                         <Button clickHandler={() => this.handleClick("Redo")} name="Redo" class="grid-item small-button btn grey1"><FaRedo/></Button>
