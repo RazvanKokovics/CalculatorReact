@@ -88,7 +88,7 @@ function calculate(obj, buttonName){
     //% Button
     if(buttonName === "%"){
         if(validString(obj.operationString)){
-            saveState({result: obj.result, operationString: obj.operationString, total: obj.total, history: obj.history});
+            saveState({...obj, result: obj.result, operationString: obj.operationString, total: obj.total, history: obj.history});
             let result1 = isSliceable(operateString(obj.operationString).toFixed(2));
             let result2 = isSliceable(operateString(result1 + '/100').toFixed(2));
             let expressions = addExpression(obj, obj.operationString);
@@ -103,8 +103,9 @@ function calculate(obj, buttonName){
         }
         if(obj.result === true){
             let res = isSliceable(operateString(obj.total + "/100"));
-            saveState({total: obj.total});
+            saveState({...obj, total: obj.total});
             return{
+                ...obj,
                 total: res,
             }
         }
@@ -113,11 +114,12 @@ function calculate(obj, buttonName){
     //+/- Button
     if(buttonName === "+/-"){
         if(validString(obj.operationString)){
-            saveState({result: obj.result, operationString: obj.operationString, total: obj.total, history: obj.history});
+            saveState({...obj, result: obj.result, operationString: obj.operationString, total: obj.total, history: obj.history});
             let res1 =isSliceable(operateString(obj.operationString).toFixed(2));
             let res2 = isSliceable(operateString('-' + res1).toFixed(2));
             let expressions = addExpression(obj, obj.operationString);
             return{
+                ...obj,
                 result: true,
                 total: res2,
                 operationString: "",
@@ -128,8 +130,9 @@ function calculate(obj, buttonName){
         }
         if(obj.result === true){
             let res = isSliceable(operateString("-" + obj.total).toFixed(2));
-            saveState({total: obj.total});
+            saveState({...obj, total: obj.total});
             return{
+                ...obj,
                 total: res,
             }
         }
@@ -137,8 +140,9 @@ function calculate(obj, buttonName){
 
     //() or number Button and takes the reult from previous calculus
     if(obj.result && (isNumber(buttonName) || "()".includes(buttonName))){
-        saveState({result: obj.result, operationString: obj.operationString});
+        saveState({...obj, result: obj.result, operationString: obj.operationString});
         return{
+            ...obj,
             result:false,
             operationString: buttonName,
         }
@@ -146,8 +150,9 @@ function calculate(obj, buttonName){
 
     //Operation or . Button and takes the result from previous calculus
     if(obj.result && "+.*/-".includes(buttonName)){
-        saveState({result: obj.result, operationString: obj.operationString});
+        saveState({...obj, result: obj.result, operationString: obj.operationString});
         return{
+            ...obj,
             result:false,
             operationString: obj.total + buttonName,
         }
@@ -158,16 +163,20 @@ function calculate(obj, buttonName){
         let l = obj.operationString.length;
         if(l === 0){
             if("0)+-/*".includes(buttonName)){
-                return {};
+                return {
+                    ...obj,
+                };
             }
-            saveState({result: obj.result, operationString: obj.operationString});
+            saveState({...obj, result: obj.result, operationString: obj.operationString});
             if(buttonName === "."){
                 return{
+                    ...obj,
                     operationString: "0.",
                     result: false,
                 }
             }
             return{
+                ...obj,
                 operationString: obj.operationString + buttonName,
                 result: false,
             }
@@ -175,19 +184,25 @@ function calculate(obj, buttonName){
         else{
             let lastCharacter = obj.operationString[l-1];
             if(isOperation(buttonName) && isOperation(lastCharacter)){
-                saveState({operationString: obj.operationString});
+                saveState({...obj, operationString: obj.operationString});
                 return {
+                    ...obj,
                     operationString: obj.operationString.slice(0,l-1) + buttonName,
                 };
             }
             if(buttonName === ")" && "(.+-/*".includes(lastCharacter)){
-                return {};
+                return {
+                    ...obj,
+                };
             }
             if(buttonName === "(" && (isNumber(lastCharacter) || ".)".includes(lastCharacter))){
-                return {};
+                return {
+                    ...obj,
+                };
             }
-            saveState({result: obj.result, operationString: obj.operationString});
+            saveState({...obj, result: obj.result, operationString: obj.operationString});
             return{
+                ...obj,
                 operationString: obj.operationString + buttonName,
                 result: false,
             }
@@ -196,18 +211,23 @@ function calculate(obj, buttonName){
 
     if(buttonName === '.'){
         if(obj.operationString === ""){
-            return{};
+            return{
+                ...obj,
+            };
         }
         else{
             let lastCharacter = obj.operationString[obj.operationString.length-1];
             if(isNumber(lastCharacter)){
-                saveState({result: obj.result, operationString: obj.operationString});
+                saveState({...obj, result: obj.result, operationString: obj.operationString});
                 return{
+                    ...obj,
                     operationString: obj.operationString + buttonName,
                     result: false,
                 }
             }
-            return {};
+            return {
+                ...obj,
+            };
         }
         
     }
@@ -216,6 +236,7 @@ function calculate(obj, buttonName){
         undoStack = [];
         redoStack = [];
         return {
+            ...obj,
             total: null,
             next: null,
             operation: null,
@@ -227,10 +248,11 @@ function calculate(obj, buttonName){
 
     if(buttonName === "="){
         if(validString(obj.operationString)){
-            saveState({result: obj.result, operationString: obj.operationString, total: obj.total, history: obj.history});
+            saveState({...obj, result: obj.result, operationString: obj.operationString, total: obj.total, history: obj.history});
             let result = isSliceable(operateString(obj.operationString).toFixed(2));
             let expressions = addExpression(obj, obj.operationString);
             return{
+                ...obj,
                 result: true,
                 total: result,
                 operationString: "",

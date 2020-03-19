@@ -4,33 +4,15 @@ import DisplayContainer from "./DisplayContainer";
 import History from "./History";
 import ButtonPanel from "./ButtonPanel";
 import ExpressionsPanel from "./ExpressionsPanel";
-import calculate from "../service/calculate";
 import './Calculator.css';
+import Form from "./Form";
+import {store} from '../store';
+import {setDisplay} from '../actions';
 
 class Calculator extends Component{
-    state = {
-        total: null,
-        result: false,
-        history:"History: ",
-        operationString:"",
-        extended:false,
-        expressions:[
-            {id: 0, string: "5+3"},
-            {id: 1, string: "12*6"},
-            {id: 2, string: "90/3*4"},
-        ],
-        expressionsCounter: 3,
-    };
 
     handleClick = buttonName => {
-        if(buttonName === "hide")
-            this.setState({extended:false});
-        else{
-            if(buttonName === "show")
-                this.setState({extended:true});
-            else
-                this.setState(calculate(this.state, buttonName));
-        }
+		store.dispatch(setDisplay(store.getState(), buttonName));
     };
 
     componentDidMount(){
@@ -42,22 +24,24 @@ class Calculator extends Component{
     }
 
     keyPressed = event => {
+		let keyName;
         if(event.shiftKey && event.key === "+")
-            this.setState(calculate(this.state, "+"))
+            keyName = "+";
         if(event.shiftKey && event.key === "*")
-            this.setState(calculate(this.state, "*"))
+			keyName = "*";
         if(event.shiftKey && event.key === "(")
-            this.setState(calculate(this.state, "("))
+			keyName = "(";
         if(event.shiftKey && event.key === ")")
-            this.setState(calculate(this.state, ")"))
+			keyName = ")";
         if(event.key === "/")
-            this.setState(calculate(this.state, "/"))
+			keyName = "/";
         if(event.key === "-")
-            this.setState(calculate(this.state, "-"))
+			keyName = "-";
         if(event.keyCode === 13)
-        	this.setState(calculate(this.state, "="))
+			keyName = "=";
         if("0123456789=".includes(event.key))
-            this.setState(calculate(this.state, event.key));
+			keyName = event.key;
+		store.dispatch(setDisplay(store.getState(), keyName));
     }
 
     handleExpressionClick = expressionString => {
@@ -65,22 +49,35 @@ class Calculator extends Component{
     };
 
     handleGarbageClick = expressionId => {
-        let filtered = this.state.expressions.filter(function(expression) { return expression.id !== expressionId; });
+        let filtered = this.state.expressions.filter((expression) => { return expression.id !== expressionId; });
         this.setState({expressions: filtered});
     }
+
+    handleOpen = () => {
+        this.setState({loggedin : true});
+        document.removeEventListener("keydown", this.keyPressed);
+    };
+  
+    handleClose = () => {
+        this.setState({loggedin : false});
+        document.addEventListener("keydown", this.keyPressed);
+    };
 
     render(){
         return(
             <main className="calculator">
                 <DisplayContainer>
-                    <History value={this.state.history}/>
+                    <History value={store.getState().calculation.history}/>
                 </DisplayContainer>
                 <DisplayContainer>
-                    <Display value={this.state.operationString || this.state.total || "0"}/>
+                    <Display value={store.getState().calculation.operationString || store.getState().calculation.total || "0"}/>
                 </DisplayContainer>
-                <ButtonPanel extended={this.state.extended} clickHandler={this.handleClick}/>
-                <ExpressionsPanel expressions={this.state.expressions} clickHandler={this.handleExpressionClick} garbageHandler={this.handleGarbageClick}/>
-            </main>
+                <ButtonPanel extended={store.getState().extended} clickHandler={this.handleClick}/>
+				
+                <ExpressionsPanel expressions={store.getState().calculation.expressions} clickHandler={this.handleExpressionClick} garbageHandler={this.handleGarbageClick}/>
+                <Form opened={store.getState().loggedin} openHandler={this.handleOpen} closeHandler={this.handleClose}/>
+				
+			</main>
       );
     }
   }

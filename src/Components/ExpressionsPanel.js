@@ -40,7 +40,7 @@ class ExpressionsPanel extends Component{
         const currentPage = this.state.currentPage;
         const expressionsPerPage = this.state.expressionsPerPage;
         const expressions = this.props.expressions;
-
+        
         const numberOfPages = Math.ceil(expressions.length / expressionsPerPage);
         const indexOfLastExpression = currentPage * expressionsPerPage;
         const indexOfFirstExpression = indexOfLastExpression - expressionsPerPage;
