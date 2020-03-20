@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import DisplayContainer from "./DisplayContainer";
 import './Calculator.css';
 import Form from "./Form";
-import { Provider } from 'react-redux';
 import ContainerDisplay from '../containers/ContainerDisplay';
 import ContainerHistory from '../containers/ContainerHistory';
 import ContainerExpressions from '../containers/ContainerExpressions';
@@ -42,21 +41,18 @@ class Calculator extends Component{
     }
 
     render(){
-		console.log("render");
         return(
             <main className="calculator">
-                <Provider store={store}>
-                    <DisplayContainer>
-                        <ContainerHistory/>
-                    </DisplayContainer>
-                    <DisplayContainer>
-                        <ContainerDisplay/>
-                    </DisplayContainer>
-                    <ContainerButtonPanel/>
-                    <ContainerExpressions/>
-                    <Form opened={store.getState().loggedin} openHandler={this.handleOpen} closeHandler={this.handleClose}/>
-                </Provider>
-			</main>
+                <DisplayContainer>
+                    <ContainerHistory/>
+                </DisplayContainer>
+                <DisplayContainer>
+                    <ContainerDisplay/>
+                </DisplayContainer>
+                <ContainerButtonPanel/>
+                <ContainerExpressions/>
+                <Form opened={store.getState().loggedin} openHandler={this.handleOpen} closeHandler={this.handleClose}/>
+            </main>
       );
     }
   }

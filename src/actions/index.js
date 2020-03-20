@@ -1,16 +1,13 @@
-
-
 export function setDisplay(buttonName) {
-    if((buttonName === "hide") || (buttonName === "show")){
-        return {
-            type: "SET_EXTENDED"
-        }
+    return {
+        type: "SET_DISPLAY",
+        buttonName,
     }
-    else{
-        return {
-            type: "SET_DISPLAY",
-            buttonName,
-        }
+}
+
+export function setExtended() {
+    return {
+        type: "SET_EXTENDED"
     }
 }
 

@@ -7,7 +7,7 @@ class DisplayContainer extends Component{
         children : PropTypes.object,
     }
     render(){
-            return(
+        return(
             <div className="grid-item grid-item-double-all input">
                 {this.props.children}
             </div>

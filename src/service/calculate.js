@@ -70,7 +70,7 @@ function calculate(obj, buttonName){
             return object;
         }
         alert("Nothing to undo!");
-        return{};
+        return obj;
     }
 
     //Redo Button
@@ -82,13 +82,13 @@ function calculate(obj, buttonName){
             return obj;
         }
         alert("Nothing to redo!");
-        return{};
+        return obj;
     }
 
     //% Button
     if(buttonName === "%"){
         if(validString(obj.operationString)){
-            saveState({...obj, result: obj.result, operationString: obj.operationString, total: obj.total, history: obj.history});
+            saveState({...obj});
             let result1 = isSliceable(operateString(obj.operationString).toFixed(2));
             let result2 = isSliceable(operateString(result1 + '/100').toFixed(2));
             let expressions = addExpression(obj, obj.operationString);
@@ -103,7 +103,7 @@ function calculate(obj, buttonName){
         }
         if(obj.result === true){
             let res = isSliceable(operateString(obj.total + "/100"));
-            saveState({...obj, total: obj.total});
+            saveState({...obj});
             return{
                 ...obj,
                 total: res,
@@ -114,7 +114,7 @@ function calculate(obj, buttonName){
     //+/- Button
     if(buttonName === "+/-"){
         if(validString(obj.operationString)){
-            saveState({...obj, result: obj.result, operationString: obj.operationString, total: obj.total, history: obj.history});
+            saveState({...obj});
             let res1 =isSliceable(operateString(obj.operationString).toFixed(2));
             let res2 = isSliceable(operateString('-' + res1).toFixed(2));
             let expressions = addExpression(obj, obj.operationString);
@@ -130,7 +130,7 @@ function calculate(obj, buttonName){
         }
         if(obj.result === true){
             let res = isSliceable(operateString("-" + obj.total).toFixed(2));
-            saveState({...obj, total: obj.total});
+            saveState({...obj});
             return{
                 ...obj,
                 total: res,
@@ -140,7 +140,7 @@ function calculate(obj, buttonName){
 
     //() or number Button and takes the reult from previous calculus
     if(obj.result && (isNumber(buttonName) || "()".includes(buttonName))){
-        saveState({...obj, result: obj.result, operationString: obj.operationString});
+        saveState({...obj});
         return{
             ...obj,
             result:false,
@@ -150,7 +150,7 @@ function calculate(obj, buttonName){
 
     //Operation or . Button and takes the result from previous calculus
     if(obj.result && "+.*/-".includes(buttonName)){
-        saveState({...obj, result: obj.result, operationString: obj.operationString});
+        saveState({...obj});
         return{
             ...obj,
             result:false,
@@ -167,7 +167,7 @@ function calculate(obj, buttonName){
                     ...obj,
                 };
             }
-            saveState({...obj, result: obj.result, operationString: obj.operationString});
+            saveState({...obj});
             if(buttonName === "."){
                 return{
                     ...obj,
@@ -184,7 +184,7 @@ function calculate(obj, buttonName){
         else{
             let lastCharacter = obj.operationString[l-1];
             if(isOperation(buttonName) && isOperation(lastCharacter)){
-                saveState({...obj, operationString: obj.operationString});
+                saveState({...obj});
                 return {
                     ...obj,
                     operationString: obj.operationString.slice(0,l-1) + buttonName,
@@ -200,7 +200,7 @@ function calculate(obj, buttonName){
                     ...obj,
                 };
             }
-            saveState({...obj, result: obj.result, operationString: obj.operationString});
+            saveState({...obj});
             return{
                 ...obj,
                 operationString: obj.operationString + buttonName,
@@ -218,7 +218,7 @@ function calculate(obj, buttonName){
         else{
             let lastCharacter = obj.operationString[obj.operationString.length-1];
             if(isNumber(lastCharacter)){
-                saveState({...obj, result: obj.result, operationString: obj.operationString});
+                saveState({...obj});
                 return{
                     ...obj,
                     operationString: obj.operationString + buttonName,
@@ -248,7 +248,7 @@ function calculate(obj, buttonName){
 
     if(buttonName === "="){
         if(validString(obj.operationString)){
-            saveState({...obj, result: obj.result, operationString: obj.operationString, total: obj.total, history: obj.history});
+            saveState({...obj});
             let result = isSliceable(operateString(obj.operationString).toFixed(2));
             let expressions = addExpression(obj, obj.operationString);
             return{
