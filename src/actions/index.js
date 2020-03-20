@@ -1,18 +1,29 @@
-import calculate from "../service/calculate";
 
-export function setDisplay(previousState, buttonName) {
+
+export function setDisplay(buttonName) {
     if((buttonName === "hide") || (buttonName === "show")){
         return {
-            type: "SET_EXTENDED",
-            extended: !previousState.extended
+            type: "SET_EXTENDED"
         }
     }
     else{
-        const calculation = calculate(previousState.calculation, buttonName);
         return {
             type: "SET_DISPLAY",
-            calculation,
+            buttonName,
         }
     }
-    
+}
+
+export function handleExpressionClick(expression){
+    return {
+        type: "SET_EXPRESSION",
+        value: expression
+    }
+} 
+
+export function handleGarbageClick(expressionId){
+    return {
+        type: "DELETE_EXPRESSION",
+        id: expressionId
+    }
 }

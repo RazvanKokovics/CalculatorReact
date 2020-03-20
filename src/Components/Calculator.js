@@ -1,19 +1,16 @@
 import React, {Component} from 'react';
-import Display from "./Display";
 import DisplayContainer from "./DisplayContainer";
-import History from "./History";
-import ButtonPanel from "./ButtonPanel";
-import ExpressionsPanel from "./ExpressionsPanel";
 import './Calculator.css';
 import Form from "./Form";
-import {store} from '../store';
+import { Provider } from 'react-redux';
+import ContainerDisplay from '../containers/ContainerDisplay';
+import ContainerHistory from '../containers/ContainerHistory';
+import ContainerExpressions from '../containers/ContainerExpressions';
+import ContainerButtonPanel from '../containers/ContainerButtonPanel';
 import {setDisplay} from '../actions';
+import {store} from '../store';
 
 class Calculator extends Component{
-
-    handleClick = buttonName => {
-		store.dispatch(setDisplay(store.getState(), buttonName));
-    };
 
     componentDidMount(){
         document.addEventListener("keydown", this.keyPressed);
@@ -41,42 +38,24 @@ class Calculator extends Component{
 			keyName = "=";
         if("0123456789=".includes(event.key))
 			keyName = event.key;
-		store.dispatch(setDisplay(store.getState(), keyName));
+		store.dispatch(setDisplay(keyName));
     }
-
-    handleExpressionClick = expressionString => {
-        this.setState({operationString: expressionString, result:false});
-    };
-
-    handleGarbageClick = expressionId => {
-        let filtered = this.state.expressions.filter((expression) => { return expression.id !== expressionId; });
-        this.setState({expressions: filtered});
-    }
-
-    handleOpen = () => {
-        this.setState({loggedin : true});
-        document.removeEventListener("keydown", this.keyPressed);
-    };
-  
-    handleClose = () => {
-        this.setState({loggedin : false});
-        document.addEventListener("keydown", this.keyPressed);
-    };
 
     render(){
+		console.log("render");
         return(
             <main className="calculator">
-                <DisplayContainer>
-                    <History value={store.getState().calculation.history}/>
-                </DisplayContainer>
-                <DisplayContainer>
-                    <Display value={store.getState().calculation.operationString || store.getState().calculation.total || "0"}/>
-                </DisplayContainer>
-                <ButtonPanel extended={store.getState().extended} clickHandler={this.handleClick}/>
-				
-                <ExpressionsPanel expressions={store.getState().calculation.expressions} clickHandler={this.handleExpressionClick} garbageHandler={this.handleGarbageClick}/>
-                <Form opened={store.getState().loggedin} openHandler={this.handleOpen} closeHandler={this.handleClose}/>
-				
+                <Provider store={store}>
+                    <DisplayContainer>
+                        <ContainerHistory/>
+                    </DisplayContainer>
+                    <DisplayContainer>
+                        <ContainerDisplay/>
+                    </DisplayContainer>
+                    <ContainerButtonPanel/>
+                    <ContainerExpressions/>
+                    <Form opened={store.getState().loggedin} openHandler={this.handleOpen} closeHandler={this.handleClose}/>
+                </Provider>
 			</main>
       );
     }

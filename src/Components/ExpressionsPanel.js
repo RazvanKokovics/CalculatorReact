@@ -83,6 +83,4 @@ class ExpressionsPanel extends Component{
         );
     }
 }
-
-
 export default ExpressionsPanel;

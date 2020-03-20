@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './DisplayContainer.css';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 
 class DisplayContainer extends Component{
     static propTypes = {
