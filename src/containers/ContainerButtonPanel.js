@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import {setDisplay, setExtended} from '../actions';
 import ButtonPanel from '../Components/ButtonPanel';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
     extended : state.extended,
 })
 

@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import ExpressionsPanel from '../Components/ExpressionsPanel';
 import {handleExpressionClick, handleGarbageClick} from '../actions';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
     expressions : state.calculation.expressions,
 })
 

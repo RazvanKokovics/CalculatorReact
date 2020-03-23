@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import DisplayContainer from "./DisplayContainer";
 import './Calculator.css';
-import Form from "./Form";
+import ContainerForm from "../containers/ContainerForm";
 import ContainerDisplay from '../containers/ContainerDisplay';
 import ContainerHistory from '../containers/ContainerHistory';
 import ContainerExpressions from '../containers/ContainerExpressions';
@@ -51,7 +51,7 @@ class Calculator extends Component{
                 </DisplayContainer>
                 <ContainerButtonPanel/>
                 <ContainerExpressions/>
-                <Form opened={store.getState().loggedin} openHandler={this.handleOpen} closeHandler={this.handleClose}/>
+                <ContainerForm/>
             </main>
       );
     }

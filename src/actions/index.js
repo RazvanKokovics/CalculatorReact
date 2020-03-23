@@ -24,3 +24,10 @@ export function handleGarbageClick(expressionId){
         id: expressionId
     }
 }
+
+export function logIn(){
+    return {
+        type: "LOG_IN",
+    }
+}
+
