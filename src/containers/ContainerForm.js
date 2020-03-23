@@ -1,16 +1,32 @@
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import Form from '../Components/Form';
 import {logIn} from "../actions";
+const axios = require('axios').default;
 
-const mapStateToProps = (state) => ({
-    opened : state.loggedin,
+const mapStateToProps = state => ({
+  opened: (state.userCredentials.username === ""),
 })
-  
-const mapDispatchToProps = (dispatch) => ({
-    formHandler: expression => dispatch(logIn)
-})
+
+
+function login(dispatch, username, password){
+  const body = {
+    user_name: username,
+    password: password
+  }
+  axios.post("http://localhost:3002/user/login", body)
+    .then(({ data }) => {
+      console.log(data);
+      dispatch(logIn(body, data));
+    });
+};
+
+const mapDispatchToProps = dispatch => ({
+  buttonHandler : (username, password) => {
+    login(dispatch, username, password)
+  }
+});
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps,
+  mapStateToProps,
+  mapDispatchToProps,
 )(Form)

@@ -4,17 +4,35 @@ import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 
 class Form extends Component{
+    constructor(props) {
+        super(props);
+        
+        this.state = {
+            username: '',
+            password: '',
+            submitted: false
+        };
+    
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+    
 
-    handleOpen = () => {
-        this.props.openHandler();
+    handleChange(e) {
+        const { name, value } = e.target;
+        this.setState({ [name]: value });
     }
 
-    handleClose = () => {
-        this.props.closeHandler();
+    handleSubmit(e) {
+        e.preventDefault();
+        this.setState({ submitted: true });
+        const { username, password } = this.state;
+        if (username && password) {
+            this.props.buttonHandler(username, password);
+        }
     }
 
     render(){
@@ -22,16 +40,16 @@ class Form extends Component{
             <Dialog open={this.props.opened} onClose={this.handleClose} aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">Log In</DialogTitle>
             <DialogContent>
-                <form className="" noValidate>
+                <form className="" noValidate onSubmit={this.handleSubmit}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
                             <TextField
                                 variant="outlined"
                                 required
                                 fullWidth
-                                name="password"
+                                name="username"
                                 label="Username"
-                                id="username"
+                                onChange={this.handleChange}
                             />
                         </Grid>
                         
@@ -43,7 +61,7 @@ class Form extends Component{
                                 name="password"
                                 label="Password"
                                 type="password"
-                                id="password"
+                                onChange={this.handleChange}
                                 autoComplete="current-password"
                             />
                         </Grid>
@@ -60,16 +78,7 @@ class Form extends Component{
                     >
                         Log In
                     </Button>
-  
-                    <Grid container justify="flex-end">
-                        <Grid item>
-                        <Link href="#" variant="body2">
-                            <br></br>
-                            Don't have an account? Register.
-                        </Link>
-                        </Grid>
-                    </Grid>
-                
+                    <br></br>
                 </form>
             </DialogContent>
             </Dialog>

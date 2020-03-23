@@ -12,11 +12,11 @@ import {store} from '../store';
 class Calculator extends Component{
 
     componentDidMount(){
-        document.addEventListener("keydown", this.keyPressed);
+        //document.addEventListener("keydown", this.keyPressed);
     }
 
     componentWillUnmount(){
-        document.removeEventListener("keydown", this.keyPressed);
+        //document.removeEventListener("keydown", this.keyPressed);
     }
 
     keyPressed = event => {
