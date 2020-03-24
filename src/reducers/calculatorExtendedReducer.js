@@ -1,14 +1,16 @@
-import { SET_EXTENDED } from "constants/actionTypes";
+import { SET_EXTENDED } from 'constants/actionTypes';
 
-const initialCalculatorExtendedState = false;
+const initialExtendedState = false;
 
-export const calculatorExtendedReducer = (state = initialCalculatorExtendedState, action) => {
+export const calculatorExtendedReducer = (
+  state = initialExtendedState,
+  action,
+) => {
   switch (action.type) {
-    
     case SET_EXTENDED:
       return !state;
-    
+
     default:
-		  return state;
+      return state;
   }
-}
+};

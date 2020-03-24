@@ -1,11 +1,11 @@
-.double{
-    grid-column-end: span 2;
+.double {
+  grid-column-end: span 2;
 }
-  
-.grey1{
-    background-color: #646466;
+
+.grey1 {
+  background-color: #646466;
 }
-  
-.grey2{
-    background-color:#7d7d7f;
+
+.grey2 {
+  background-color: #7d7d7f;
 }
