@@ -8,10 +8,11 @@ import {
   GET_EXPRESSIONS,
 } from 'constants/actionTypes.js';
 
-export function setDisplay(buttonName) {
+export function setDisplay(buttonName, jwt) {
   return {
     type: SET_DISPLAY,
     buttonName,
+    jwt,
   };
 }
 

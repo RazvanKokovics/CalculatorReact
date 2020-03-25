@@ -7,6 +7,8 @@ class Button extends Component {
   static propTypes = {
     name: PropTypes.string,
     clickHandler: PropTypes.func,
+    class: PropTypes.string,
+    children: PropTypes.object,
   };
 
   handleClick = () => {

@@ -40,7 +40,7 @@ function validString(str) {
   return false;
 }
 
-function isSliceable(number) {
+function sliceNumber(number) {
   let nr = number.toString();
   if (nr[nr.length - 1] === '0') {
     nr = nr.slice(0, nr.length - 1);
@@ -82,8 +82,8 @@ function calculate(obj, buttonName) {
   if (buttonName === '%') {
     if (validString(obj.operationString)) {
       saveState({ ...obj });
-      let result1 = isSliceable(operateString(obj.operationString).toFixed(2));
-      let result2 = isSliceable(operateString(result1 + '/100').toFixed(2));
+      let result1 = sliceNumber(operateString(obj.operationString).toFixed(2));
+      let result2 = sliceNumber(operateString(result1 + '/100').toFixed(2));
       let expressions = addExpression(obj, obj.operationString);
       return {
         result: true,
@@ -95,7 +95,7 @@ function calculate(obj, buttonName) {
       };
     }
     if (obj.result === true) {
-      let res = isSliceable(operateString(obj.total + '/100'));
+      let res = sliceNumber(operateString(obj.total + '/100'));
       saveState({ ...obj });
       return {
         ...obj,
@@ -108,8 +108,8 @@ function calculate(obj, buttonName) {
   if (buttonName === '+/-') {
     if (validString(obj.operationString)) {
       saveState({ ...obj });
-      let res1 = isSliceable(operateString(obj.operationString).toFixed(2));
-      let res2 = isSliceable(operateString('-' + res1).toFixed(2));
+      let res1 = sliceNumber(operateString(obj.operationString).toFixed(2));
+      let res2 = sliceNumber(operateString('-' + res1).toFixed(2));
       let expressions = addExpression(obj, obj.operationString);
       return {
         ...obj,
@@ -122,7 +122,7 @@ function calculate(obj, buttonName) {
       };
     }
     if (obj.result === true) {
-      let res = isSliceable(operateString('-' + obj.total).toFixed(2));
+      let res = sliceNumber(operateString('-' + obj.total).toFixed(2));
       saveState({ ...obj });
       return {
         ...obj,
@@ -242,7 +242,7 @@ function calculate(obj, buttonName) {
   if (buttonName === '=') {
     if (validString(obj.operationString)) {
       saveState({ ...obj });
-      let result = isSliceable(operateString(obj.operationString).toFixed(2));
+      let result = sliceNumber(operateString(obj.operationString).toFixed(2));
       let expressions = addExpression(obj, obj.operationString);
       return {
         ...obj,
@@ -262,11 +262,11 @@ function calculate(obj, buttonName) {
 function addExpression(obj, expression) {
   let expressions = [...obj.expressions];
   for (let i = 0; i < expressions.length; i++) {
-    if (expressions[i].string === expression) {
+    if (expressions[i].e_value === expression) {
       return expressions;
     }
   }
-  expressions.push({ id: obj.expressionsCounter, string: expression });
+  expressions.push({ e_id: obj.expressionsCounter, e_value: expression });
   return expressions;
 }
 

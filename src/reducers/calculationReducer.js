@@ -22,7 +22,7 @@ const initialCalculatorState = {
 export const calculatorReducer = (state = initialCalculatorState, action) => {
   switch (action.type) {
     case SET_DISPLAY:
-      return calculate(state, action.buttonName);
+      return calculate(state, action.buttonName, action.jwt);
 
     case SET_EXPRESSION:
       return {
@@ -34,7 +34,7 @@ export const calculatorReducer = (state = initialCalculatorState, action) => {
       return {
         ...state,
         expressions: state.expressions.filter(
-          (expression) => expression.id !== action.expressionId,
+          (expression) => expression.e_id !== action.expressionId,
         ),
       };
     case GET_EXPRESSIONS:
