@@ -1,12 +1,18 @@
-.grid-item-double-all{
-    text-align: right;
-    font-size: 16px;
-    background-color: #373638;
-    font-size: 30px;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    font-weight: 100;
-    overflow-x: auto;
-    min-height: 20px;
-    white-space: nowrap;
+.grid-item-double-all {
+  text-align: right;
+  font-size: 16px;
+  background-color: #373638;
+  font-size: 30px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  font-weight: 100;
+  overflow-x: auto;
+  min-height: 20px;
+  white-space: nowrap;
+}
+
+.login-div {
+  text-align: center;
+  color: #fd9e2b;
+  font-size: 20px;
 }

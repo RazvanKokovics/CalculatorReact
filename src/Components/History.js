@@ -1,20 +1,16 @@
-import React, {Component} from 'react'
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-import "./History.css"
+import 'Components/History.css';
 
-class History extends Component{
-    static propTypes = {
-        value: PropTypes.string,
-    };
+class History extends Component {
+  static propTypes = {
+    value: PropTypes.string,
+  };
 
-    render(){
-        return(
-            <div id="history">
-                {this.props.value}
-            </div>
-        );
-    }
+  render() {
+    return <div id="history">{this.props.value}</div>;
+  }
 }
 
-export default History
+export default History;
