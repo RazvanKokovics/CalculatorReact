@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import './DisplayContainer.css';
 import PropTypes from 'prop-types';
+
+import 'Components/DisplayContainer.css';
 
 class DisplayContainer extends Component {
   static propTypes = {
     children: PropTypes.object,
   };
+
   render() {
     return (
       <div className="grid-item grid-item-double-all input">

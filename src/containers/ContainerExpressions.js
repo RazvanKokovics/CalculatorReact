@@ -1,24 +1,14 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
-import ExpressionsPanel from '../Components/ExpressionsPanel';
-import { handleExpressionClick, getExpressions } from '../actions';
-import { fetchExpressions, deleteExpression } from '../service/queries';
 import PropTypes from 'prop-types';
 
-const mapStateToProps = (state) => ({
-  expressions: state.calculation.expressions,
-  jwt: state.userCredentials.jwt,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  clickHandler: (expression) => dispatch(handleExpressionClick(expression)),
-  garbageHandler: (expressionId, jwt) =>
-    deleteExpression(dispatch, expressionId, jwt),
-  getExpressions: (jwt) => {
-    if (jwt) fetchExpressions(dispatch, jwt);
-    else dispatch(getExpressions([]));
-  },
-});
+import ExpressionsPanel from 'Components/ExpressionsPanel';
+import { handleExpressionClick, getExpressions } from 'actions';
+import {
+  fetchExpressions,
+  deleteExpression,
+  insertExpression,
+} from 'service/queries';
 
 class ContainerExpressionsPanel extends Component {
   static propTypes = {
@@ -27,6 +17,7 @@ class ContainerExpressionsPanel extends Component {
     expressions: PropTypes.array,
     jwt: PropTypes.string,
     getExpressions: PropTypes.func,
+    addExpression: PropTypes.func,
   };
 
   componentDidMount() {
@@ -37,6 +28,16 @@ class ContainerExpressionsPanel extends Component {
     const { jwt } = this.props;
     if (prevProps.jwt !== jwt) {
       this.props.getExpressions(jwt);
+    }
+    const { expressions } = this.props;
+    if (prevProps.expressions.length + 1 === expressions.length) {
+      console.log('add');
+      if (expressions.length > 0) {
+        this.props.addExpression(
+          expressions[expressions.length - 1].e_value,
+          jwt,
+        );
+      }
     }
   }
 
@@ -54,6 +55,26 @@ class ContainerExpressionsPanel extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  expressions: state.calculation.expressions,
+  jwt: state.userCredentials.jwt,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  clickHandler: (expression) => dispatch(handleExpressionClick(expression)),
+
+  //need to rewrite
+  garbageHandler: (expressionId, jwt) =>
+    deleteExpression(dispatch, expressionId, jwt),
+  getExpressions: (jwt) => {
+    if (jwt) fetchExpressions(dispatch, jwt);
+    else dispatch(getExpressions([]));
+  },
+  addExpression: (expression, jwt) => {
+    if (jwt) insertExpression(dispatch, expression, jwt);
+  },
+});
 
 export default connect(
   mapStateToProps,

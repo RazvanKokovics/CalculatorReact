@@ -17,7 +17,7 @@ class LoginPanel extends Component {
   render() {
     if (this.props.username) {
       return (
-        <Grid className="loginDiv" container spacing={2}>
+        <Grid className="login-div" container spacing={2}>
           <Grid item xs={12}>
             <Typography component="h1" variant="h5">
               {'Hello, ' + this.props.username}
@@ -37,7 +37,7 @@ class LoginPanel extends Component {
         </Grid>
       );
     } else {
-      return <div className="loginDiv">Please sign in first!</div>;
+      return <div className="login-div">Please sign in first!</div>;
     }
   }
 }

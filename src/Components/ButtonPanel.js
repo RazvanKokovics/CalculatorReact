@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Button from './Button';
-import ButtonContainer from './ButtonContainer';
 import { FaArrowRight, FaArrowLeft, FaUndo, FaRedo } from 'react-icons/fa';
-import './ButtonPanel.css';
+
+import 'Components/ButtonPanel.css';
+import Button from 'Components/Button';
+import ButtonContainer from 'Components/ButtonContainer';
 
 class ButtonPanel extends Component {
   static propTypes = {
@@ -11,19 +12,21 @@ class ButtonPanel extends Component {
     extended: PropTypes.bool,
     enabledKeys: PropTypes.bool,
     keyPressed: PropTypes.func,
-    jwt: PropTypes.string,
   };
 
-  handleClick = (buttonName, jwt) => {
-    this.props.clickHandler(buttonName, jwt);
+  handleClick = (buttonName) => {
+    this.props.clickHandler(buttonName);
   };
 
   componentDidUpdate(prevProps) {
     const { enabledKeys } = this.props;
+
     if (prevProps.enabledKeys !== enabledKeys) {
-      if (!this.props.enabledKeys)
+      if (!this.props.enabledKeys) {
         document.addEventListener('keydown', this.props.keyPressed);
-      else document.removeEventListener('keydown', this.props.keyPressed);
+      } else {
+        document.removeEventListener('keydown', this.props.keyPressed);
+      }
     }
   }
 
@@ -57,7 +60,7 @@ class ButtonPanel extends Component {
     if (this.props.extended === false) {
       hideShowButton = (
         <Button
-          clickHandler={() => this.handleClick('show', this.props.jwt)}
+          clickHandler={() => this.handleClick('show')}
           name=""
           key="50"
           class="grid-item btn grey1"
@@ -72,7 +75,7 @@ class ButtonPanel extends Component {
           {firstButtonsSimple.map((button) => (
             <Button
               name={button.name}
-              clickHandler={() => this.handleClick(button.name, this.props.jwt)}
+              clickHandler={() => this.handleClick(button.name)}
               key={button.id}
               class={'grid-item btn ' + button.style}
             />
@@ -81,7 +84,7 @@ class ButtonPanel extends Component {
           {buttons.map((button) => (
             <Button
               name={button.name}
-              clickHandler={() => this.handleClick(button.name, this.props.jwt)}
+              clickHandler={() => this.handleClick(button.name)}
               key={button.id}
               class={'grid-item btn ' + button.style}
             />
@@ -91,7 +94,7 @@ class ButtonPanel extends Component {
     } else {
       hideShowButton = (
         <Button
-          clickHandler={() => this.handleClick('hide', this.props.jwt)}
+          clickHandler={() => this.handleClick('hide')}
           name=""
           key="50"
           class="grid-item btn grey1"
@@ -99,19 +102,20 @@ class ButtonPanel extends Component {
           <FaArrowLeft />
         </Button>
       );
+
       return (
         <div className="button-panel">
           {hideShowButton}
           <ButtonContainer class="two-button-container">
             <Button
-              clickHandler={() => this.handleClick('Undo', this.props.jwt)}
+              clickHandler={() => this.handleClick('Undo')}
               name="Undo"
               class="grid-item small-button btn grey1"
             >
               <FaUndo />
             </Button>
             <Button
-              clickHandler={() => this.handleClick('Redo', this.props.jwt)}
+              clickHandler={() => this.handleClick('Redo')}
               name="Redo"
               class="grid-item small-button btn grey1"
             >
@@ -120,34 +124,34 @@ class ButtonPanel extends Component {
           </ButtonContainer>
           <ButtonContainer class="two-button-container">
             <Button
-              clickHandler={() => this.handleClick('AC', this.props.jwt)}
+              clickHandler={() => this.handleClick('AC')}
               name="AC"
               class="grid-item small-button btn grey1"
             ></Button>
             <Button
-              clickHandler={() => this.handleClick('+/-', this.props.jwt)}
+              clickHandler={() => this.handleClick('+/-')}
               name="+/-"
               class="grid-item small-button btn grey1"
             ></Button>
           </ButtonContainer>
           <ButtonContainer class="four-button-container">
             <Button
-              clickHandler={() => this.handleClick('(', this.props.jwt)}
+              clickHandler={() => this.handleClick('(')}
               name="("
               class="grid-item small-button btn"
             ></Button>
             <Button
-              clickHandler={() => this.handleClick(')', this.props.jwt)}
+              clickHandler={() => this.handleClick(')')}
               name=")"
               class="grid-item small-button btn"
             ></Button>
             <Button
-              clickHandler={() => this.handleClick('%', this.props.jwt)}
+              clickHandler={() => this.handleClick('%')}
               name="%"
               class="grid-item small-button btn"
             ></Button>
             <Button
-              clickHandler={() => this.handleClick('/', this.props.jwt)}
+              clickHandler={() => this.handleClick('/')}
               name="/"
               class="grid-item small-button btn"
             ></Button>
@@ -155,7 +159,7 @@ class ButtonPanel extends Component {
           {buttons.map((button) => (
             <Button
               name={button.name}
-              clickHandler={() => this.handleClick(button.name, this.props.jwt)}
+              clickHandler={() => this.handleClick(button.name)}
               key={button.id}
               class={'grid-item btn ' + button.style}
             />

@@ -1,19 +1,24 @@
-import { logIn, getExpressions, handleGarbageClick } from '../actions';
+import {
+  getExpressions,
+  handleGarbageClick,
+  updateExpressionId,
+} from '../actions';
 
 const axios = require('axios').default;
 
-export function login(dispatch, username, password) {
+export function login(username, password) {
   const body = {
     user_name: username,
     password: password,
   };
-  axios
+  return axios
     .post('http://localhost:3002/user/login', body)
-    .then((jwt) => {
-      dispatch(logIn(body, jwt.data));
-    })
-    .catch((error) => {
-      console.log(error.response.data);
+    .then((response) => {
+      return {
+        username: username,
+        password: password,
+        jwt: response.data,
+      };
     });
 }
 
@@ -52,23 +57,21 @@ export function deleteExpression(dispatch, expressionId, jwt) {
     });
 }
 
-/*
 export function insertExpression(dispatch, expression, jwt) {
   const config = {
-    data: {
-      e_value: expression,
-    },
     headers: {
       'auth-token': jwt,
     },
   };
+  const body = {
+    e_value: expression,
+  };
   axios
-    .post('http://localhost:3002/api/expressions', config)
+    .post('http://localhost:3002/api/expressions', body, config)
     .then((response) => {
-      dispatch(addExpressionToState(response.data, expression));
+      dispatch(updateExpressionId(response.data));
     })
     .catch((error) => {
       console.log(error.response.data);
     });
 }
-*/

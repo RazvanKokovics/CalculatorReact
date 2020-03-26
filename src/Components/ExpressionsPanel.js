@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { FaTrashAlt, FaAngleLeft, FaAngleRight } from 'react-icons/fa';
-import './ExpressionsPanel.css';
 import PropTypes from 'prop-types';
+
+import 'Components/ExpressionsPanel.css';
 
 class ExpressionsPanel extends Component {
   static propTypes = {
@@ -15,8 +16,6 @@ class ExpressionsPanel extends Component {
     expressionsPerPage: 5,
     numberOfPages: 1,
   };
-
-  componentDidMount() {}
 
   handleClick = (expressionString) => {
     this.props.clickHandler(expressionString);
@@ -45,9 +44,8 @@ class ExpressionsPanel extends Component {
   }
 
   render() {
-    const currentPage = this.state.currentPage;
-    const expressionsPerPage = this.state.expressionsPerPage;
-    const expressions = this.props.expressions;
+    const { currentPage, expressionsPerPage } = this.state;
+    const { expressions } = this.props;
 
     const numberOfPages = Math.ceil(expressions.length / expressionsPerPage);
     const indexOfLastExpression = currentPage * expressionsPerPage;
@@ -59,7 +57,7 @@ class ExpressionsPanel extends Component {
 
     const renderExpressions = currentExpressions.map((expression) => {
       return (
-        <div className="entryContainer" key={expression.e_id}>
+        <div className="entry-container" key={expression.e_id}>
           <p
             onClick={() => this.handleClick(expression.e_value)}
             className="entry"
@@ -67,7 +65,7 @@ class ExpressionsPanel extends Component {
             {expression.e_value}
           </p>
           <div
-            className="toRight"
+            className="to-right"
             onClick={() => this.garbageClick(expression.e_id)}
           >
             <FaTrashAlt />

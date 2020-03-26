@@ -5,6 +5,7 @@ class Display extends Component {
   static propTypes = {
     value: PropTypes.string,
   };
+
   render() {
     return <div>{this.props.value}</div>;
   }

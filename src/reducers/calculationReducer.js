@@ -4,6 +4,7 @@ import {
   SET_EXPRESSION,
   DELETE_EXPRESSION,
   GET_EXPRESSIONS,
+  UPDATE_EXPRESSION_ID,
 } from 'constants/actionTypes.js';
 
 const initialCalculatorState = {
@@ -22,7 +23,7 @@ const initialCalculatorState = {
 export const calculatorReducer = (state = initialCalculatorState, action) => {
   switch (action.type) {
     case SET_DISPLAY:
-      return calculate(state, action.buttonName, action.jwt);
+      return calculate(state, action.buttonName);
 
     case SET_EXPRESSION:
       return {
@@ -43,8 +44,18 @@ export const calculatorReducer = (state = initialCalculatorState, action) => {
         expressions: action.expressions,
         expressionsCounter: action.expressions.length,
       };
-
+    case UPDATE_EXPRESSION_ID:
+      return {
+        ...state,
+        expressions: updateLastExpressionId(state.expressions, action.e_id),
+      };
     default:
       return state;
   }
 };
+
+function updateLastExpressionId(expressionArray, expressionId) {
+  let expressions = [...expressionArray];
+  expressions[expressions.length - 1].e_id = expressionId;
+  return expressions;
+}

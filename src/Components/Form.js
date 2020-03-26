@@ -8,11 +8,6 @@ import Grid from '@material-ui/core/Grid';
 import PropTypes from 'prop-types';
 
 class Form extends Component {
-  static propTypes = {
-    buttonHandler: PropTypes.func,
-    opened: PropTypes.bool,
-  };
-
   constructor(props) {
     super(props);
 
@@ -25,6 +20,11 @@ class Form extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+
+  static propTypes = {
+    buttonHandler: PropTypes.func,
+    opened: PropTypes.bool,
+  };
 
   handleChange(e) {
     const { name, value } = e.target;

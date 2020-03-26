@@ -14,14 +14,14 @@
   width: 70%;
 }
 
-.toRight {
+.to-right {
   padding: 5px;
   margin-left: auto;
   margin-right: 5px;
   color: #fd9e2b;
 }
 
-.entryContainer {
+.entry-container {
   height: auto;
   display: flex;
   border-bottom: 1px solid grey;
