@@ -6,8 +6,8 @@ import 'Components/ExpressionsPanel.css';
 
 class ExpressionsPanel extends Component {
   static propTypes = {
-    handleClick: PropTypes.func,
-    garbageClick: PropTypes.func,
+    clickHandler: PropTypes.func,
+    garbageHandler: PropTypes.func,
     expressions: PropTypes.array,
     pageClick: PropTypes.func,
     previousPageClick: PropTypes.func,
@@ -15,24 +15,42 @@ class ExpressionsPanel extends Component {
     numberOfPages: PropTypes.number,
   };
 
+  handleClick = (expressionString) => {
+    this.props.clickHandler(expressionString);
+  };
+
+  garbageClick = (expressionId) => {
+    this.props.garbageHandler(expressionId);
+  };
+
+  pageClick = (event) => {
+    this.props.pageClick(event);
+  };
+
+  previousPageClick() {
+    this.props.previousPageClick();
+  }
+
+  nextPageClick(numberOfPages) {
+    this.props.nextPageClick(numberOfPages);
+  }
+
   render() {
-    const {
-      expressions,
-      numberOfPages,
-      previousPageClick,
-      nextPageClick,
-      pageClick,
-      garbageClick,
-      handleClick,
-    } = this.props;
+    const { expressions, numberOfPages } = this.props;
 
     const renderExpressions = expressions.map((expression) => {
       return (
         <div className="entry-container" key={expression.e_id}>
-          <p onClick={handleClick(expression.e_value)} className="entry">
+          <p
+            onClick={() => this.handleClick(expression.e_value)}
+            className="entry"
+          >
             {expression.e_value}
           </p>
-          <div className="to-right" onClick={garbageClick(expression.e_id)}>
+          <div
+            className="to-right"
+            onClick={() => this.garbageClick(expression.e_id)}
+          >
             <FaTrashAlt />
           </div>
         </div>
@@ -51,7 +69,7 @@ class ExpressionsPanel extends Component {
           key={number}
           id={number}
           className="pagination-number"
-          onClick={pageClick}
+          onClick={this.pageClick.bind(this)}
         >
           {number}
         </div>
@@ -64,13 +82,16 @@ class ExpressionsPanel extends Component {
         {renderExpressions}
         <div id="center">
           <div id="pagination">
-            <div className="pagination-number" onClick={previousPageClick}>
+            <div
+              className="pagination-number"
+              onClick={this.previousPageClick.bind(this)}
+            >
               <FaAngleLeft />
             </div>
             {renderPageNumbers}
             <div
               className="pagination-number"
-              onClick={nextPageClick(numberOfPages)}
+              onClick={this.nextPageClick.bind(this, numberOfPages)}
             >
               <FaAngleRight />
             </div>
