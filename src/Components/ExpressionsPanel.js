@@ -9,12 +9,10 @@ class ExpressionsPanel extends Component {
     clickHandler: PropTypes.func,
     garbageHandler: PropTypes.func,
     expressions: PropTypes.array,
-  };
-
-  state = {
-    currentPage: 1,
-    expressionsPerPage: 5,
-    numberOfPages: 1,
+    pageClick: PropTypes.func,
+    previousPageClick: PropTypes.func,
+    nextPageClick: PropTypes.func,
+    numberOfPages: PropTypes.number,
   };
 
   handleClick = (expressionString) => {
@@ -25,37 +23,22 @@ class ExpressionsPanel extends Component {
     this.props.garbageHandler(expressionId);
   };
 
-  pageClick(event) {
-    this.setState({
-      currentPage: Number(event.target.id),
-    });
-  }
+  pageClick = (event) => {
+    this.props.pageClick(event);
+  };
 
   previousPageClick() {
-    if (this.state.currentPage > 1) {
-      this.setState({ currentPage: this.state.currentPage - 1 });
-    }
+    this.props.previousPageClick();
   }
 
   nextPageClick(numberOfPages) {
-    if (this.state.currentPage < numberOfPages) {
-      this.setState({ currentPage: this.state.currentPage + 1 });
-    }
+    this.props.nextPageClick(numberOfPages);
   }
 
   render() {
-    const { currentPage, expressionsPerPage } = this.state;
-    const { expressions } = this.props;
+    const { expressions, numberOfPages } = this.props;
 
-    const numberOfPages = Math.ceil(expressions.length / expressionsPerPage);
-    const indexOfLastExpression = currentPage * expressionsPerPage;
-    const indexOfFirstExpression = indexOfLastExpression - expressionsPerPage;
-    const currentExpressions = expressions.slice(
-      indexOfFirstExpression,
-      indexOfLastExpression,
-    );
-
-    const renderExpressions = currentExpressions.map((expression) => {
+    const renderExpressions = expressions.map((expression) => {
       return (
         <div className="entry-container" key={expression.e_id}>
           <p
