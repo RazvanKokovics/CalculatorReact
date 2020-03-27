@@ -31,7 +31,8 @@ class ContainerForm extends React.PureComponent {
   }
 
   handleSubmit(event) {
-    const { username, password, buttonHandler } = this.state;
+    const { username, password } = this.state;
+    const { buttonHandler } = this.props;
 
     event.preventDefault();
 
