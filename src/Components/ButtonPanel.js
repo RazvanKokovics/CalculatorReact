@@ -57,7 +57,6 @@ class ButtonPanel extends Component {
       return (
         <div className="button-panel">
           {hideShowButton}
-
           {firstButtonsSimple.map((button) => (
             <Button
               name={button.name}
