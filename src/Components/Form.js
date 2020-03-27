@@ -8,24 +8,50 @@ import Grid from '@material-ui/core/Grid';
 import PropTypes from 'prop-types';
 
 class Form extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      username: '',
+      password: '',
+      submitted: false,
+    };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
   static propTypes = {
     buttonHandler: PropTypes.func,
     opened: PropTypes.bool,
-    handleChange: PropTypes.func,
-    handleSubmit: PropTypes.func,
   };
 
-  render() {
-    const { opened } = this.props;
-    const { handleChange, handleSubmit } = this.props;
+  handleChange(e) {
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
+  }
 
+  handleSubmit(e) {
+    e.preventDefault();
+    this.setState({ submitted: true });
+    const { username, password } = this.state;
+    if (username && password) {
+      this.props.buttonHandler(username, password);
+    }
+  }
+
+  render() {
     return (
-      <Dialog open={opened} aria-labelledby="form-dialog-title">
+      <Dialog
+        open={this.props.opened}
+        onClose={this.handleClose}
+        aria-labelledby="form-dialog-title"
+      >
         <DialogTitle id="form-dialog-title">
           <center>Log In</center>
         </DialogTitle>
         <DialogContent>
-          <form className="" noValidate onSubmit={handleSubmit}>
+          <form className="" noValidate onSubmit={this.handleSubmit}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
@@ -34,7 +60,7 @@ class Form extends Component {
                   fullWidth
                   name="username"
                   label="Username"
-                  onChange={handleChange}
+                  onChange={this.handleChange}
                 />
               </Grid>
               <Grid item xs={12}>

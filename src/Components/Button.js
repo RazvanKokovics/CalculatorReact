@@ -11,13 +11,18 @@ class Button extends Component {
     children: PropTypes.object,
   };
 
-  render() {
-    const { name, clickHandler, children } = this.props;
-    const className = this.props.class;
+  handleClick = () => {
+    this.props.clickHandler(this.props.name);
+  };
 
+  render() {
     return (
-      <button title={name} className={className} onClick={clickHandler}>
-        {children || name}
+      <button
+        title={this.props.name}
+        className={this.props.class}
+        onClick={this.props.clickHandler}
+      >
+        {this.props.children || this.props.name}
       </button>
     );
   }
