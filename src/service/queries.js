@@ -1,9 +1,3 @@
-import {
-  getExpressions,
-  handleGarbageClick,
-  updateExpressionId,
-} from '../actions';
-
 const axios = require('axios').default;
 
 export function login(username, password) {
@@ -22,23 +16,23 @@ export function login(username, password) {
     });
 }
 
-export function fetchExpressions(dispatch, jwt) {
+export function fetchExpressions(jwt) {
   const config = {
     headers: {
       'auth-token': jwt,
     },
   };
-  axios
+  return axios
     .get('http://localhost:3002/api/expressions', config)
     .then((response) => {
-      dispatch(getExpressions(response.data));
+      return response.data;
     })
     .catch((error) => {
       console.log(error.response.data);
     });
 }
 
-export function deleteExpression(dispatch, expressionId, jwt) {
+export function deleteExpression(expressionId, jwt) {
   const config = {
     data: {
       e_id: expressionId,
@@ -47,17 +41,17 @@ export function deleteExpression(dispatch, expressionId, jwt) {
       'auth-token': jwt,
     },
   };
-  axios
+  return axios
     .delete('http://localhost:3002/api/expressions', config)
     .then(() => {
-      dispatch(handleGarbageClick(expressionId));
+      return expressionId;
     })
     .catch((error) => {
       console.log(error.response.data);
     });
 }
 
-export function insertExpression(dispatch, expression, jwt) {
+export function insertExpression(expression, jwt) {
   const config = {
     headers: {
       'auth-token': jwt,
@@ -66,10 +60,10 @@ export function insertExpression(dispatch, expression, jwt) {
   const body = {
     e_value: expression,
   };
-  axios
+  return axios
     .post('http://localhost:3002/api/expressions', body, config)
     .then((response) => {
-      dispatch(updateExpressionId(response.data));
+      return response.data;
     })
     .catch((error) => {
       console.log(error.response.data);
