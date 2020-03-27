@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import Button from 'Components/Button';
-import { buttons } from 'Components/ButtonPanel/config';
+import { firstButtonsSimple } from 'Components/ButtonPanel/config';
 
-class MainButtons extends Component {
+class InitialButtons extends Component {
   static propTypes = {
     clickHandler: PropTypes.func,
   };
@@ -14,7 +14,7 @@ class MainButtons extends Component {
   };
 
   render() {
-    return buttons.map((button) => (
+    return firstButtonsSimple.map((button) => (
       <Button
         name={button.name}
         clickHandler={() => this.handleClick(button.name)}
@@ -25,4 +25,4 @@ class MainButtons extends Component {
   }
 }
 
-export default MainButtons;
+export default InitialButtons;

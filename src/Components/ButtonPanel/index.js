@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { FaArrowRight, FaArrowLeft, FaUndo, FaRedo } from 'react-icons/fa';
+import { FaArrowRight, FaArrowLeft } from 'react-icons/fa';
 
 import 'Components/ButtonPanel/ButtonPanel.css';
 import Button from 'Components/Button';
-import ButtonContainer from 'Components/ButtonContainer';
-import { firstButtonsSimple } from 'Components/ButtonPanel/config';
 import MainButtons from 'Components/ButtonPanel/MainButtons.js';
+import UndoRedo from 'Components/ButtonPanel/UndoRedo';
+import ClearChangeSign from 'Components/ButtonPanel/ClearChangeSign';
+import Paranthesis from 'Components/ButtonPanel/Paranthesis';
+import InitialButtons from 'Components/ButtonPanel/InitialButtons';
 
 class ButtonPanel extends Component {
   static propTypes = {
@@ -46,14 +48,7 @@ class ButtonPanel extends Component {
           >
             <FaArrowRight />
           </Button>
-          {firstButtonsSimple.map((button) => (
-            <Button
-              name={button.name}
-              clickHandler={() => this.handleClick(button.name)}
-              key={button.id}
-              class={'grid-item btn ' + button.style}
-            />
-          ))}
+          <InitialButtons clickHandler={this.handleClick} />
           <MainButtons clickHandler={this.handleClick} />
         </div>
       );
@@ -68,56 +63,10 @@ class ButtonPanel extends Component {
           >
             <FaArrowLeft />
           </Button>
-          <ButtonContainer class="two-button-container">
-            <Button
-              clickHandler={() => this.handleClick('Undo')}
-              name="Undo"
-              class="grid-item small-button btn grey1"
-            >
-              <FaUndo />
-            </Button>
-            <Button
-              clickHandler={() => this.handleClick('Redo')}
-              name="Redo"
-              class="grid-item small-button btn grey1"
-            >
-              <FaRedo />
-            </Button>
-          </ButtonContainer>
-          <ButtonContainer class="two-button-container">
-            <Button
-              clickHandler={() => this.handleClick('AC')}
-              name="AC"
-              class="grid-item small-button btn grey1"
-            ></Button>
-            <Button
-              clickHandler={() => this.handleClick('+/-')}
-              name="+/-"
-              class="grid-item small-button btn grey1"
-            ></Button>
-          </ButtonContainer>
-          <ButtonContainer class="four-button-container">
-            <Button
-              clickHandler={() => this.handleClick('(')}
-              name="("
-              class="grid-item small-button btn"
-            ></Button>
-            <Button
-              clickHandler={() => this.handleClick(')')}
-              name=")"
-              class="grid-item small-button btn"
-            ></Button>
-            <Button
-              clickHandler={() => this.handleClick('%')}
-              name="%"
-              class="grid-item small-button btn"
-            ></Button>
-            <Button
-              clickHandler={() => this.handleClick('/')}
-              name="/"
-              class="grid-item small-button btn"
-            ></Button>
-          </ButtonContainer>
+
+          <UndoRedo clickHandler={this.handleClick} />
+          <ClearChangeSign clickHandler={this.handleClick} />
+          <Paranthesis clickHandler={this.handleClick} />
           <MainButtons clickHandler={this.handleClick} />
         </div>
       );

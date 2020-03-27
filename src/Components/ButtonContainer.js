@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 class ButtonContainer extends Component {
   static propTypes = {
     class: PropTypes.string,
-    children: PropTypes.object,
+    children: PropTypes.any,
   };
 
   render() {

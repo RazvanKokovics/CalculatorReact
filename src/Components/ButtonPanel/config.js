@@ -21,3 +21,10 @@ export const firstButtonsSimple = [
   { id: 3, name: '%', style: 'grey1' },
   { id: 4, name: '/', style: '' },
 ];
+
+export const paranthesisOperators = [
+  { id: 20, name: '(' },
+  { id: 21, name: ')' },
+  { id: 22, name: '%' },
+  { id: 23, name: '/' },
+];
