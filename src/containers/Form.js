@@ -31,14 +31,14 @@ class ContainerForm extends React.PureComponent {
   }
 
   handleSubmit(event) {
-    const { username, password } = this.state;
+    const { username, password, buttonHandler } = this.state;
 
     event.preventDefault();
 
     this.setState({ submitted: true });
 
     if (username && password) {
-      this.props.buttonHandler(username, password);
+      buttonHandler(username, password);
     }
   }
 
