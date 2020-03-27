@@ -146,11 +146,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   clickHandler: (expression) => dispatch(handleExpressionClick(expression)),
-
-  //need to rewrite because of dispatch
   garbageHandler: (expressionId, jwt) =>
     dispatch(removeExpression(expressionId, jwt)),
-
   getExpressions: (jwt) => dispatch(getExpressions(jwt)),
   addExpression: (expression, jwt) => dispatch(addExpression(expression, jwt)),
 });

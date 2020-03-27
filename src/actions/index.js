@@ -17,13 +17,6 @@ import {
   insertExpression,
 } from 'service/queries';
 
-export function setDisplay(buttonName) {
-  return {
-    type: SET_DISPLAY,
-    buttonName,
-  };
-}
-
 export function setExtended() {
   return {
     type: SET_EXTENDED,
@@ -110,4 +103,11 @@ export function addExpression(expression, jwt) {
       e_id: expressionId,
     };
   }
+}
+
+export function setDisplay(buttonName) {
+  return {
+    type: SET_DISPLAY,
+    buttonName,
+  };
 }
