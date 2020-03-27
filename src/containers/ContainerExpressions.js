@@ -11,6 +11,21 @@ import {
 } from 'service/queries';
 
 class ContainerExpressionsPanel extends Component {
+  constructor(props) {
+    super(props);
+
+    this.garbage = this.garbage.bind(this);
+    this.pageClick = this.pageClick.bind(this);
+    this.previousPageClick = this.previousPageClick.bind(this);
+    this.nextPageClick = this.nextPageClick.bind(this);
+  }
+
+  state = {
+    currentPage: 1,
+    expressionsPerPage: 5,
+    numberOfPages: 1,
+  };
+
   static propTypes = {
     clickHandler: PropTypes.func,
     garbageHandler: PropTypes.func,
@@ -21,36 +36,102 @@ class ContainerExpressionsPanel extends Component {
   };
 
   componentDidMount() {
-    if (this.props.jwt) this.props.getExpressions(this.props.jwt);
+    if (this.props.jwt) {
+      this.props.getExpressions(this.props.jwt);
+    }
   }
 
   componentDidUpdate(prevProps) {
     const { jwt } = this.props;
+    const { expressions } = this.props;
+
     if (prevProps.jwt !== jwt) {
       this.props.getExpressions(jwt);
     }
-    const { expressions } = this.props;
+
     if (prevProps.expressions.length + 1 === expressions.length) {
-      console.log('add');
-      if (expressions.length > 0) {
-        this.props.addExpression(
-          expressions[expressions.length - 1].e_value,
-          jwt,
-        );
-      }
+      this.addLastExpression(expressions);
+    }
+
+    if (prevProps.expressions !== expressions) {
+      console.log('Update');
+      this.updatePages();
     }
   }
+
+  addLastExpression = (expressions) => {
+    const { jwt } = this.props;
+    if (expressions.length > 0) {
+      console.log('add');
+      this.props.addExpression(
+        expressions[expressions.length - 1].e_value,
+        jwt,
+      );
+    }
+  };
+
+  updatePages = () => {
+    const { currentPage, expressionsPerPage } = this.state;
+    const { expressions } = this.props;
+    const numberOfPages = Math.ceil(expressions.length / expressionsPerPage);
+    let newCurrentPage = currentPage;
+
+    if (currentPage > numberOfPages) {
+      newCurrentPage = numberOfPages;
+    }
+    console.log(numberOfPages);
+    console.log(newCurrentPage);
+    this.setState({
+      ...this.state,
+      numberOfPages,
+      currentPage: newCurrentPage,
+    });
+  };
 
   garbage = (expressionId) => {
     this.props.garbageHandler(expressionId, this.props.jwt);
   };
 
+  pageClick = (event) => {
+    this.setState({
+      currentPage: Number(event.target.id),
+    });
+  };
+
+  previousPageClick() {
+    if (this.state.currentPage > 1) {
+      this.setState({ currentPage: this.state.currentPage - 1 });
+    }
+  }
+
+  nextPageClick(numberOfPages) {
+    if (this.state.currentPage < numberOfPages) {
+      this.setState({ currentPage: this.state.currentPage + 1 });
+    }
+  }
+
   render() {
+    const { expressionsPerPage, currentPage } = this.state;
+    const { expressions } = this.props;
+    const indexOfLastExpression = currentPage * expressionsPerPage;
+    const indexOfFirstExpression = indexOfLastExpression - expressionsPerPage;
+
+    const currentExpressions = expressions.slice(
+      indexOfFirstExpression,
+      indexOfLastExpression,
+    );
+
     return (
       <ExpressionsPanel
-        expressions={this.props.expressions}
+        expressions={currentExpressions}
         clickHandler={this.props.clickHandler}
         garbageHandler={this.garbage}
+        expressionsPerPage={this.state.expressionsPerPage}
+        numberOfPages={this.state.numberOfPages}
+        currentPage={this.state.currentPage}
+        pageClick={this.pageClick}
+        previousPageClick={this.previousPageClick}
+        nextPageClick={this.nextPageClick}
       />
     );
   }
