@@ -22,13 +22,13 @@ class ContainerButtonPanel extends React.PureComponent {
 
   componentDidUpdate(prevProps) {
     const { enabledKeys } = this.props;
+    const { enabledKeys: prevEnabledKeys } = prevProps;
+    const eventHandler = enabledKeys
+      ? document.removeEventListener
+      : document.addEventListener;
 
-    if (prevProps.enabledKeys !== enabledKeys) {
-      if (!this.props.enabledKeys) {
-        document.addEventListener('keydown', this.handleKey);
-      } else {
-        document.removeEventListener('keydown', this.handleKey);
-      }
+    if (prevEnabledKeys !== enabledKeys) {
+      eventHandler('keydown', this.handleKey);
     }
   }
 
@@ -61,12 +61,9 @@ class ContainerButtonPanel extends React.PureComponent {
   }
 
   render() {
-    return (
-      <ButtonPanel
-        extended={this.props.extended}
-        clickHandler={this.clickHandler}
-      />
-    );
+    const { extended } = this.props;
+
+    return <ButtonPanel extended={extended} clickHandler={this.clickHandler} />;
   }
 }
 

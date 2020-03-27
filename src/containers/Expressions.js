@@ -35,6 +35,14 @@ class ContainerExpressionsPanel extends Component {
     addExpression: PropTypes.func,
   };
 
+  componentDidMount() {
+    const { jwt, getExpressions } = this.props;
+
+    if (jwt) {
+      getExpressions(jwt);
+    }
+  }
+
   componentDidUpdate(prevProps) {
     const { jwt } = this.props;
     const { expressions } = this.props;

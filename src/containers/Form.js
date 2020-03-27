@@ -17,7 +17,6 @@ class ContainerForm extends React.PureComponent {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.buttonHandler = this.props.buttonHandler;
   }
 
   static propTypes = {
