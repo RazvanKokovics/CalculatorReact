@@ -3,28 +3,28 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import ExpressionsPanel from 'Components/ExpressionsPanel';
-import { handleExpressionClick, getExpressions } from 'actions';
 import {
-  fetchExpressions,
-  deleteExpression,
-  insertExpression,
-} from 'service/queries';
+  handleExpressionClick,
+  removeExpression,
+  getExpressions,
+  addExpression,
+} from 'actions';
 
 class ContainerExpressionsPanel extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      currentPage: 1,
+      expressionsPerPage: 5,
+      numberOfPages: 1,
+    };
 
     this.garbage = this.garbage.bind(this);
     this.pageClick = this.pageClick.bind(this);
     this.previousPageClick = this.previousPageClick.bind(this);
     this.nextPageClick = this.nextPageClick.bind(this);
   }
-
-  state = {
-    currentPage: 1,
-    expressionsPerPage: 5,
-    numberOfPages: 1,
-  };
 
   static propTypes = {
     clickHandler: PropTypes.func,
@@ -36,8 +36,10 @@ class ContainerExpressionsPanel extends Component {
   };
 
   componentDidMount() {
-    if (this.props.jwt) {
-      this.props.getExpressions(this.props.jwt);
+    const { jwt, getExpressions } = this.props;
+
+    if (jwt) {
+      getExpressions(jwt);
     }
   }
 
@@ -45,7 +47,7 @@ class ContainerExpressionsPanel extends Component {
     const { jwt } = this.props;
     const { expressions } = this.props;
 
-    if (prevProps.jwt !== jwt) {
+    if (prevProps.jwt !== jwt && jwt) {
       this.props.getExpressions(jwt);
     }
 
@@ -54,19 +56,15 @@ class ContainerExpressionsPanel extends Component {
     }
 
     if (prevProps.expressions !== expressions) {
-      console.log('Update');
       this.updatePages();
     }
   }
 
   addLastExpression = (expressions) => {
-    const { jwt } = this.props;
-    if (expressions.length > 0) {
-      console.log('add');
-      this.props.addExpression(
-        expressions[expressions.length - 1].e_value,
-        jwt,
-      );
+    const { jwt, addExpression } = this.props;
+
+    if (expressions.length > 0 && jwt) {
+      addExpression(expressions[expressions.length - 1].e_value, jwt);
     }
   };
 
@@ -79,8 +77,7 @@ class ContainerExpressionsPanel extends Component {
     if (currentPage > numberOfPages) {
       newCurrentPage = numberOfPages;
     }
-    console.log(numberOfPages);
-    console.log(newCurrentPage);
+
     this.setState({
       ...this.state,
       numberOfPages,
@@ -89,7 +86,8 @@ class ContainerExpressionsPanel extends Component {
   };
 
   garbage = (expressionId) => {
-    this.props.garbageHandler(expressionId, this.props.jwt);
+    const { jwt } = this.props;
+    this.props.garbageHandler(expressionId, jwt);
   };
 
   pageClick = (event) => {
@@ -99,14 +97,18 @@ class ContainerExpressionsPanel extends Component {
   };
 
   previousPageClick() {
-    if (this.state.currentPage > 1) {
-      this.setState({ currentPage: this.state.currentPage - 1 });
+    const { currentPage } = this.state;
+
+    if (currentPage > 1) {
+      this.setState({ currentPage: currentPage - 1 });
     }
   }
 
   nextPageClick(numberOfPages) {
-    if (this.state.currentPage < numberOfPages) {
-      this.setState({ currentPage: this.state.currentPage + 1 });
+    const { currentPage } = this.state;
+
+    if (currentPage < numberOfPages) {
+      this.setState({ currentPage: currentPage + 1 });
     }
   }
 
@@ -124,8 +126,8 @@ class ContainerExpressionsPanel extends Component {
     return (
       <ExpressionsPanel
         expressions={currentExpressions}
-        clickHandler={this.props.clickHandler}
-        garbageHandler={this.garbage}
+        handleClick={this.props.clickHandler}
+        garbageClick={this.garbage}
         expressionsPerPage={this.state.expressionsPerPage}
         numberOfPages={this.state.numberOfPages}
         currentPage={this.state.currentPage}
@@ -144,17 +146,10 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   clickHandler: (expression) => dispatch(handleExpressionClick(expression)),
-
-  //need to rewrite
   garbageHandler: (expressionId, jwt) =>
-    deleteExpression(dispatch, expressionId, jwt),
-  getExpressions: (jwt) => {
-    if (jwt) fetchExpressions(dispatch, jwt);
-    else dispatch(getExpressions([]));
-  },
-  addExpression: (expression, jwt) => {
-    if (jwt) insertExpression(dispatch, expression, jwt);
-  },
+    dispatch(removeExpression(expressionId, jwt)),
+  getExpressions: (jwt) => dispatch(getExpressions(jwt)),
+  addExpression: (expression, jwt) => dispatch(addExpression(expression, jwt)),
 });
 
 export default connect(

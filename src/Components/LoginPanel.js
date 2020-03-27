@@ -10,26 +10,20 @@ class LoginPanel extends Component {
     username: PropTypes.string,
   };
 
-  logoutClick = () => {
-    this.props.logoutHandler();
-  };
-
   render() {
-    if (this.props.username) {
+    const { username, logoutHandler } = this.props;
+
+    if (username) {
       return (
         <Grid className="login-div" container spacing={2}>
           <Grid item xs={12}>
             <Typography component="h1" variant="h5">
-              {'Hello, ' + this.props.username}
+              {'Hello, ' + username}
             </Typography>
           </Grid>
           <Grid item xs={2} />
           <Grid item xs={8}>
-            <Button
-              fullWidth
-              variant="contained"
-              onClick={() => this.logoutClick()}
-            >
+            <Button fullWidth variant="contained" onClick={logoutHandler}>
               Logout
             </Button>
           </Grid>

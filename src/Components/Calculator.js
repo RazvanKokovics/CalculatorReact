@@ -2,29 +2,29 @@ import React, { Component } from 'react';
 
 import DisplayContainer from 'Components/DisplayContainer';
 import 'Components/Calculator.css';
-import ContainerForm from 'containers/ContainerForm';
-import ContainerDisplay from 'containers/ContainerDisplay';
-import ContainerHistory from 'containers/ContainerHistory';
-import ContainerExpressions from 'containers/ContainerExpressions';
-import ContainerButtonPanel from 'containers/ContainerButtonPanel';
-import ContainerLoginPanel from 'containers/ContainerLoginPanel';
+import Form from 'containers/Form';
+import Display from 'containers/Display';
+import History from 'containers/History';
+import Expressions from 'containers/Expressions';
+import ButtonPanel from 'containers/ButtonPanel';
+import LoginPanel from 'containers/LoginPanel';
 
 class Calculator extends Component {
   render() {
     return (
       <main className="calculator">
         <DisplayContainer>
-          <ContainerLoginPanel />
+          <LoginPanel />
         </DisplayContainer>
         <DisplayContainer>
-          <ContainerHistory />
+          <History />
         </DisplayContainer>
         <DisplayContainer>
-          <ContainerDisplay />
+          <Display />
         </DisplayContainer>
-        <ContainerButtonPanel />
-        <ContainerExpressions />
-        <ContainerForm />
+        <ButtonPanel />
+        <Expressions />
+        <Form />
       </main>
     );
   }
