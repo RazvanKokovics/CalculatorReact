@@ -8,13 +8,6 @@ import Grid from '@material-ui/core/Grid';
 import PropTypes from 'prop-types';
 
 class Form extends Component {
-  constructor(props) {
-    super(props);
-
-    this.handleChange = this.props.handleChange.bind(this);
-    this.handleSubmit = this.props.handleSubmit.bind(this);
-  }
-
   static propTypes = {
     buttonHandler: PropTypes.func,
     opened: PropTypes.bool,
@@ -24,7 +17,7 @@ class Form extends Component {
 
   render() {
     const { opened } = this.props;
-    const { handleChange, handleSubmit } = this;
+    const { handleChange, handleSubmit } = this.props;
 
     return (
       <Dialog open={opened} aria-labelledby="form-dialog-title">

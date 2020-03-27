@@ -10,12 +10,8 @@ class LoginPanel extends Component {
     username: PropTypes.string,
   };
 
-  logoutClick = () => {
-    this.props.logoutHandler();
-  };
-
   render() {
-    const { username } = this.props;
+    const { username, logoutHandler } = this.props;
 
     if (username) {
       return (
@@ -27,11 +23,7 @@ class LoginPanel extends Component {
           </Grid>
           <Grid item xs={2} />
           <Grid item xs={8}>
-            <Button
-              fullWidth
-              variant="contained"
-              onClick={() => this.logoutClick()}
-            >
+            <Button fullWidth variant="contained" onClick={logoutHandler}>
               Logout
             </Button>
           </Grid>

@@ -126,8 +126,8 @@ class ContainerExpressionsPanel extends Component {
     return (
       <ExpressionsPanel
         expressions={currentExpressions}
-        clickHandler={this.props.clickHandler}
-        garbageHandler={this.garbage}
+        handleClick={this.props.clickHandler}
+        garbageClick={this.garbage}
         expressionsPerPage={this.state.expressionsPerPage}
         numberOfPages={this.state.numberOfPages}
         currentPage={this.state.currentPage}
