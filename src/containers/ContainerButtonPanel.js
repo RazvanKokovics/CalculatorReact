@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import ButtonPanel from 'Components/ButtonPanel';
+import ButtonPanel from 'Components/ButtonPanel/index';
 import { setDisplay, setExtended } from 'actions';
 
 class ContainerButtonPanel extends React.PureComponent {
