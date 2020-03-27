@@ -15,12 +15,14 @@ class LoginPanel extends Component {
   };
 
   render() {
-    if (this.props.username) {
+    const { username } = this.props;
+
+    if (username) {
       return (
         <Grid className="login-div" container spacing={2}>
           <Grid item xs={12}>
             <Typography component="h1" variant="h5">
-              {'Hello, ' + this.props.username}
+              {'Hello, ' + username}
             </Typography>
           </Grid>
           <Grid item xs={2} />
