@@ -3,12 +3,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import ExpressionsPanel from 'Components/ExpressionsPanel';
-import { handleExpressionClick } from 'actions';
 import {
-  fetchExpressions,
-  deleteExpression,
-  insertExpression,
-} from 'service/queries';
+  handleExpressionClick,
+  removeExpression,
+  getExpressions,
+  addExpression,
+} from 'actions';
 
 class ContainerExpressionsPanel extends Component {
   constructor(props) {
@@ -86,7 +86,8 @@ class ContainerExpressionsPanel extends Component {
   };
 
   garbage = (expressionId) => {
-    this.props.garbageHandler(expressionId, this.props.jwt);
+    const { jwt } = this.props;
+    this.props.garbageHandler(expressionId, jwt);
   };
 
   pageClick = (event) => {
@@ -96,14 +97,18 @@ class ContainerExpressionsPanel extends Component {
   };
 
   previousPageClick() {
-    if (this.state.currentPage > 1) {
-      this.setState({ currentPage: this.state.currentPage - 1 });
+    const { currentPage } = this.state;
+
+    if (currentPage > 1) {
+      this.setState({ currentPage: currentPage - 1 });
     }
   }
 
   nextPageClick(numberOfPages) {
-    if (this.state.currentPage < numberOfPages) {
-      this.setState({ currentPage: this.state.currentPage + 1 });
+    const { currentPage } = this.state;
+
+    if (currentPage < numberOfPages) {
+      this.setState({ currentPage: currentPage + 1 });
     }
   }
 
@@ -144,10 +149,10 @@ const mapDispatchToProps = (dispatch) => ({
 
   //need to rewrite because of dispatch
   garbageHandler: (expressionId, jwt) =>
-    deleteExpression(dispatch, expressionId, jwt),
-  getExpressions: (jwt) => fetchExpressions(dispatch, jwt),
-  addExpression: (expression, jwt) =>
-    insertExpression(dispatch, expression, jwt),
+    dispatch(removeExpression(expressionId, jwt)),
+
+  getExpressions: (jwt) => dispatch(getExpressions(jwt)),
+  addExpression: (expression, jwt) => dispatch(addExpression(expression, jwt)),
 });
 
 export default connect(
