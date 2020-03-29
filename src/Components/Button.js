@@ -8,7 +8,7 @@ class Button extends Component {
     name: PropTypes.string,
     clickHandler: PropTypes.func,
     class: PropTypes.string,
-    children: PropTypes.object,
+    value: PropTypes.string,
   };
 
   handleClick = () => {
@@ -22,7 +22,7 @@ class Button extends Component {
         className={this.props.class}
         onClick={this.props.clickHandler}
       >
-        {this.props.children || this.props.name}
+        {this.props.value || this.props.name}
       </button>
     );
   }

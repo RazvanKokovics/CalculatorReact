@@ -9,15 +9,12 @@ class MainButtons extends Component {
     clickHandler: PropTypes.func,
   };
 
-  handleClick = (buttonName) => {
-    this.props.clickHandler(buttonName);
-  };
-
   render() {
+    const { clickHandler } = this.props;
     return buttons.map((button) => (
       <Button
         name={button.name}
-        clickHandler={() => this.handleClick(button.name)}
+        clickHandler={() => clickHandler(button.name)}
         key={button.id}
         class={'grid-item btn ' + button.style}
       />

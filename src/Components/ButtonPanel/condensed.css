@@ -1,0 +1,5 @@
+.condensed {
+  display: grid;
+  grid-template-columns: repeat(4, 25% [col-start]);
+  grid-template-rows: repeat(1, 100% [row-start]);
+}
