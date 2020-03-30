@@ -45,7 +45,7 @@ class Form extends Component {
                   name="password"
                   label="Password"
                   type="password"
-                  onChange={this.handleChange}
+                  onChange={handleChange}
                   autoComplete="current-password"
                 />
               </Grid>

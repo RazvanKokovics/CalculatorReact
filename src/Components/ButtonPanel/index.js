@@ -27,7 +27,6 @@ class ButtonPanel extends Component {
 
   render() {
     const { extended, clickHandler } = this.props;
-    console.log(extended);
     return (
       <div className="button-panel">
         <FirstButtons extended={extended} clickHandler={clickHandler} />

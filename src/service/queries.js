@@ -1,6 +1,7 @@
 const axios = require('axios').default;
 
 export function login(username, password) {
+  console.log('query');
   const body = {
     user_name: username,
     password: password,
@@ -28,7 +29,7 @@ export function fetchExpressions(jwt) {
       return response.data;
     })
     .catch((error) => {
-      console.log(error.response.data);
+      console.log(error);
     });
 }
 
@@ -47,7 +48,7 @@ export function deleteExpression(expressionId, jwt) {
       return expressionId;
     })
     .catch((error) => {
-      console.log(error.response.data);
+      console.log(error);
     });
 }
 
@@ -66,6 +67,6 @@ export function insertExpression(expression, jwt) {
       return response.data;
     })
     .catch((error) => {
-      console.log(error.response.data);
+      console.log(error);
     });
 }

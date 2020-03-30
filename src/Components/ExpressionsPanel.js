@@ -29,10 +29,13 @@ class ExpressionsPanel extends Component {
     const renderExpressions = expressions.map((expression) => {
       return (
         <div className="entry-container" key={expression.e_id}>
-          <p onClick={handleClick(expression.e_value)} className="entry">
+          <p onClick={() => handleClick(expression.e_value)} className="entry">
             {expression.e_value}
           </p>
-          <div className="to-right" onClick={garbageClick(expression.e_id)}>
+          <div
+            className="to-right"
+            onClick={() => garbageClick(expression.e_id)}
+          >
             <FaTrashAlt />
           </div>
         </div>
