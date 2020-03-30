@@ -1,11 +1,11 @@
 const axios = require('axios').default;
 
 export function login(username, password) {
-  console.log('query');
   const body = {
     user_name: username,
     password: password,
   };
+
   return axios
     .post('http://localhost:3002/user/login', body)
     .then((response) => {
@@ -23,6 +23,7 @@ export function fetchExpressions(jwt) {
       'auth-token': jwt,
     },
   };
+
   return axios
     .get('http://localhost:3002/api/expressions', config)
     .then((response) => {
@@ -42,6 +43,7 @@ export function deleteExpression(expressionId, jwt) {
       'auth-token': jwt,
     },
   };
+
   return axios
     .delete('http://localhost:3002/api/expressions', config)
     .then(() => {
@@ -58,6 +60,7 @@ export function insertExpression(expression, jwt) {
       'auth-token': jwt,
     },
   };
+
   const body = {
     e_value: expression,
   };
