@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { FaArrowRight, FaArrowLeft, FaUndo, FaRedo } from 'react-icons/fa';
 
 import 'Components/Button.css';
 
@@ -11,20 +12,32 @@ class Button extends Component {
     value: PropTypes.string,
   };
 
-  handleClick = () => {
-    this.props.clickHandler(this.props.name);
+  components = {
+    arrowRight: FaArrowRight,
+    arrowLeft: FaArrowLeft,
+    undo: FaUndo,
+    redo: FaRedo,
   };
 
   render() {
-    return (
-      <button
-        title={this.props.name}
-        className={this.props.class}
-        onClick={this.props.clickHandler}
-      >
-        {this.props.value || this.props.name}
-      </button>
-    );
+    const { name, clickHandler, value } = this.props;
+    const className = this.props.class;
+
+    if (value) {
+      const TagName = this.components[value];
+
+      return (
+        <button title={name} className={className} onClick={clickHandler}>
+          <TagName />
+        </button>
+      );
+    } else {
+      return (
+        <button title={name} className={className} onClick={clickHandler}>
+          {name}
+        </button>
+      );
+    }
   }
 }
 export default Button;

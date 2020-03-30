@@ -17,19 +17,19 @@ export const buttons = [
 ];
 
 export const firstButtonsCondensed = [
-  { id: 1, name: 'show', style: 'grey1', value: '>' },
+  { id: 1, name: 'show', style: 'grey1', value: 'arrowRight' },
   { id: 2, name: '+/-', style: 'grey1' },
   { id: 3, name: '%', style: 'grey1' },
   { id: 4, name: '/', style: '' },
 ];
 
 export const firstButtonsExtended = [
-  { id: 20, name: 'hide', style: 'grey1', value: '<' },
-  { id: 21, name: 'Undo', style: 'grey1' },
+  { id: 20, name: 'hide', style: 'grey1', value: 'arrowLeft' },
+  { id: 21, name: 'Undo', style: 'grey1', value: 'undo' },
   { id: 22, name: 'AC', style: 'grey1' },
   { id: 23, name: '(', style: 'small-button ' },
   { id: 24, name: ')', style: 'small-button ' },
-  { id: 25, name: 'Redo', style: 'grey1' },
+  { id: 25, name: 'Redo', style: 'grey1', value: 'redo' },
   { id: 26, name: '+/-', style: 'grey1' },
   { id: 27, name: '%', style: 'small-button ' },
   { id: 28, name: '/', style: 'small-button ' },

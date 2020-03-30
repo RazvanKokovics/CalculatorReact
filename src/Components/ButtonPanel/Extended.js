@@ -19,7 +19,7 @@ class Extended extends Component {
             name={button.name}
             clickHandler={() => clickHandler(button.name)}
             key={button.id}
-            class={'grid-item btn' + button.style}
+            class={'grid-item btn small-button ' + button.style}
             value={button.value}
           />
         ))}
