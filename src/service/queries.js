@@ -9,10 +9,12 @@ export function login(username, password) {
   return axios
     .post('http://localhost:3002/user/login', body)
     .then((response) => {
+      const jwt = response.data;
+
+      localStorage.setItem('user', JSON.stringify({ jwt, username }));
       return {
-        username: username,
-        password: password,
-        jwt: response.data,
+        username,
+        jwt,
       };
     });
 }

@@ -7,7 +7,6 @@ import {
 
 const initialLogInState = {
   username: '',
-  password: '',
   jwt: '',
 };
 
@@ -19,21 +18,18 @@ export const loginReducer = (state = initialLogInState, action) => {
     case LOGIN_REQUEST:
       return {
         username: '',
-        password: '',
         jwt: '',
       };
 
     case LOGIN_FAILURE:
       return {
         username: '',
-        password: '',
         jwt: '',
       };
 
     case LOGOUT:
       return {
         username: '',
-        password: '',
         jwt: '',
       };
 
