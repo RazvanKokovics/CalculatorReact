@@ -9,29 +9,22 @@ class ButtonPanel extends Component {
   static propTypes = {
     clickHandler: PropTypes.func,
     extended: PropTypes.bool,
-    enabledKeys: PropTypes.bool,
-    keyPressed: PropTypes.func,
+    buttonConfig: PropTypes.object,
   };
 
-  componentDidUpdate(prevProps) {
-    const { enabledKeys } = this.props;
-
-    if (prevProps.enabledKeys !== enabledKeys) {
-      if (!this.props.enabledKeys) {
-        document.addEventListener('keydown', this.props.keyPressed);
-      } else {
-        document.removeEventListener('keydown', this.props.keyPressed);
-      }
-    }
-  }
-
   render() {
-    const { extended, clickHandler } = this.props;
-
+    const { extended, clickHandler, buttonConfig } = this.props;
     return (
       <div className="button-panel">
-        <FirstButtons extended={extended} clickHandler={clickHandler} />
-        <MainButtons clickHandler={clickHandler} />
+        <FirstButtons
+          extended={extended}
+          clickHandler={clickHandler}
+          buttonConfig={buttonConfig.firstRow}
+        />
+        <MainButtons
+          clickHandler={clickHandler}
+          buttonConfig={buttonConfig.buttons}
+        />
       </div>
     );
   }

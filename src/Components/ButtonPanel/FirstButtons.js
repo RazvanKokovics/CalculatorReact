@@ -8,15 +8,26 @@ class FirstButtons extends Component {
   static propTypes = {
     clickHandler: PropTypes.func,
     extended: PropTypes.bool,
+    buttonConfig: PropTypes.object,
   };
 
   render() {
-    const { extended, clickHandler } = this.props;
+    const { extended, clickHandler, buttonConfig } = this.props;
 
     if (!extended) {
-      return <Condensed clickHandler={clickHandler} />;
+      return (
+        <Condensed
+          clickHandler={clickHandler}
+          buttonConfig={buttonConfig.firstButtonsCondensed}
+        />
+      );
     } else {
-      return <Extended clickHandler={clickHandler} />;
+      return (
+        <Extended
+          clickHandler={clickHandler}
+          buttonConfig={buttonConfig.firstButtonsExtended}
+        />
+      );
     }
   }
 }

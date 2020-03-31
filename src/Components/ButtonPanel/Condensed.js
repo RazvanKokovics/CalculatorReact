@@ -3,19 +3,19 @@ import PropTypes from 'prop-types';
 
 import 'Components/ButtonPanel/condensed.css';
 import Button from 'Components/Button';
-import { firstButtonsCondensed } from 'Components/config';
 
 class Condensed extends Component {
   static propTypes = {
     clickHandler: PropTypes.func,
+    buttonConfig: PropTypes.array,
   };
 
   render() {
-    const { clickHandler } = this.props;
+    const { clickHandler, buttonConfig } = this.props;
 
     return (
       <div className="condensed">
-        {firstButtonsCondensed.map((button) => (
+        {buttonConfig.map((button) => (
           <Button
             name={button.name}
             clickHandler={() => clickHandler(button.name)}

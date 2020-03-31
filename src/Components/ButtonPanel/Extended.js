@@ -3,19 +3,19 @@ import PropTypes from 'prop-types';
 
 import 'Components/ButtonPanel/extended.css';
 import Button from 'Components/Button';
-import { firstButtonsExtended } from 'Components/config';
 
 class Extended extends Component {
   static propTypes = {
     clickHandler: PropTypes.func,
+    buttonConfig: PropTypes.array,
   };
 
   render() {
-    const { clickHandler } = this.props;
+    const { clickHandler, buttonConfig } = this.props;
 
     return (
       <div className="extended">
-        {firstButtonsExtended.map((button) => (
+        {buttonConfig.map((button) => (
           <Button
             name={button.name}
             clickHandler={() => clickHandler(button.name)}

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import ButtonPanel from 'Components/ButtonPanel/index';
 import { setDisplay, setExtended } from 'actions';
+import buttonsConfiguration from 'containers/ButtonPanel/config';
 
 class ContainerButtonPanel extends React.PureComponent {
   constructor(props) {
@@ -63,7 +64,13 @@ class ContainerButtonPanel extends React.PureComponent {
   render() {
     const { extended } = this.props;
 
-    return <ButtonPanel extended={extended} clickHandler={this.clickHandler} />;
+    return (
+      <ButtonPanel
+        extended={extended}
+        clickHandler={this.clickHandler}
+        buttonConfig={buttonsConfiguration}
+      />
+    );
   }
 }
 

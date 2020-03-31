@@ -1,4 +1,4 @@
-export const buttons = [
+const buttons = [
   { id: 5, name: '7', style: 'grey2' },
   { id: 6, name: '8', style: 'grey2' },
   { id: 7, name: '9', style: 'grey2' },
@@ -16,14 +16,14 @@ export const buttons = [
   { id: 19, name: '=', style: '' },
 ];
 
-export const firstButtonsCondensed = [
+const firstButtonsCondensed = [
   { id: 1, name: 'show', style: 'grey1', value: 'arrowRight' },
   { id: 2, name: '+/-', style: 'grey1' },
   { id: 3, name: '%', style: 'grey1' },
   { id: 4, name: '/', style: '' },
 ];
 
-export const firstButtonsExtended = [
+const firstButtonsExtended = [
   { id: 20, name: 'hide', style: 'grey1', value: 'arrowLeft' },
   { id: 21, name: 'Undo', style: 'grey1', value: 'undo' },
   { id: 22, name: 'AC', style: 'grey1' },
@@ -34,3 +34,8 @@ export const firstButtonsExtended = [
   { id: 27, name: '%', style: 'small-button ' },
   { id: 28, name: '/', style: 'small-button ' },
 ];
+
+export default {
+  buttons,
+  firstRow: { firstButtonsCondensed, firstButtonsExtended },
+};
