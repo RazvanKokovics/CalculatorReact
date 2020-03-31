@@ -38,17 +38,20 @@ export const calculatorReducer = (state = initialCalculatorState, action) => {
           (expression) => expression.e_id !== action.expressionId,
         ),
       };
+
     case GET_EXPRESSIONS:
       return {
         ...state,
         expressions: action.expressions,
         expressionsCounter: action.expressions.length,
       };
+
     case UPDATE_EXPRESSION_ID:
       return {
         ...state,
         expressions: updateLastExpressionId(state.expressions, action.e_id),
       };
+
     default:
       return state;
   }

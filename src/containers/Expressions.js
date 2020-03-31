@@ -32,26 +32,21 @@ class ContainerExpressionsPanel extends Component {
     clickHandler: PropTypes.func,
     garbageHandler: PropTypes.func,
     expressions: PropTypes.array,
-    jwt: PropTypes.string,
+    username: PropTypes.string,
     getExpressions: PropTypes.func,
     addExpression: PropTypes.func,
   };
 
   componentDidMount() {
-    const { jwt, getExpressions } = this.props;
+    const { username, getExpressions } = this.props;
 
-    if (jwt) {
-      getExpressions(jwt);
+    if (username) {
+      getExpressions();
     }
   }
 
   componentDidUpdate(prevProps) {
-    const { jwt } = this.props;
     const { expressions } = this.props;
-
-    if (prevProps.jwt !== jwt && jwt) {
-      this.props.getExpressions(jwt);
-    }
 
     if (prevProps.expressions.length + 1 === expressions.length) {
       this.addLastExpression(expressions);
@@ -63,10 +58,10 @@ class ContainerExpressionsPanel extends Component {
   }
 
   addLastExpression = (expressions) => {
-    const { jwt, addExpression } = this.props;
+    const { addExpression } = this.props;
 
-    if (expressions.length > 0 && jwt) {
-      addExpression(expressions[expressions.length - 1].e_value, jwt);
+    if (expressions.length > 0) {
+      addExpression(expressions[expressions.length - 1].e_value);
     }
   };
 
@@ -88,9 +83,9 @@ class ContainerExpressionsPanel extends Component {
   };
 
   garbage = (expressionId) => {
-    const { jwt, garbageHandler } = this.props;
+    const { garbageHandler } = this.props;
 
-    garbageHandler(expressionId, jwt);
+    garbageHandler(expressionId);
   };
 
   pageClick = (event) => {
@@ -170,16 +165,15 @@ class ContainerExpressionsPanel extends Component {
 }
 
 const mapStateToProps = (state) => ({
+  username: state.userCredentials.username,
   expressions: state.calculation.expressions,
-  jwt: state.userCredentials.jwt,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   clickHandler: (expression) => dispatch(handleExpressionClick(expression)),
-  garbageHandler: (expressionId, jwt) =>
-    dispatch(removeExpression(expressionId, jwt)),
-  getExpressions: (jwt) => dispatch(getExpressions(jwt)),
-  addExpression: (expression, jwt) => dispatch(addExpression(expression, jwt)),
+  garbageHandler: (expressionId) => dispatch(removeExpression(expressionId)),
+  getExpressions: () => dispatch(getExpressions()),
+  addExpression: (expression) => dispatch(addExpression(expression)),
 });
 
 export default connect(

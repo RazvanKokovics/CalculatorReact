@@ -1,15 +1,19 @@
 export const loadState = () => {
   try {
     const user = localStorage.getItem('user');
-    const data = JSON.parse(user);
 
     if (user === null) {
       return undefined;
     }
-    return {
-      userCredentials: data,
-    };
+
+    const data = JSON.parse(user);
+
+    return { userCredentials: { username: data.username } };
   } catch (err) {
     return undefined;
   }
 };
+
+export function getJwt() {
+  return JSON.parse(localStorage.getItem('user')).jwt;
+}

@@ -13,13 +13,13 @@ import {
   REGISTER_FAILURE,
   REGISTER_SUCCESS,
 } from 'constants/actionTypes.js';
+import { query } from 'service/serviceApi';
 import {
-  login,
-  deleteExpression,
-  fetchExpressions,
-  insertExpression,
-  addUser,
-} from 'service/queries';
+  LOGIN_URL,
+  EXPRESSIONS_URL,
+  REGISTER_URL,
+} from 'service/serviceApi/config';
+import { getJwt } from 'store/localStorage';
 
 export function setExtended() {
   return {
@@ -35,12 +35,19 @@ export function handleExpressionClick(expression) {
 }
 
 export function logout() {
+  localStorage.removeItem('user');
+
   return {
     type: LOGOUT,
   };
 }
 
 export function logIn(username, password) {
+  const data = {
+    user_name: username,
+    password: password,
+  };
+
   function request(user) {
     return { type: LOGIN_REQUEST, user };
   }
@@ -53,9 +60,15 @@ export function logIn(username, password) {
 
   return (dispatch) => {
     dispatch(request({ username }));
-    login(username, password).then(
-      (user) => {
-        dispatch(success(user));
+
+    return query('post', LOGIN_URL, data).then(
+      (response) => {
+        const jwt = response.data;
+
+        localStorage.setItem('user', JSON.stringify({ jwt, username }));
+
+        dispatch(success({ username }));
+        dispatch(getExpressions());
       },
       (error) => {
         dispatch(failure(error.toString()));
@@ -64,7 +77,12 @@ export function logIn(username, password) {
   };
 }
 
-export function removeExpression(expressionId, jwt) {
+export function removeExpression(expressionId) {
+  const jwt = getJwt();
+  const data = {
+    e_id: expressionId,
+  };
+
   function handleGarbageClick(expressionId) {
     return {
       type: DELETE_EXPRESSION,
@@ -73,13 +91,15 @@ export function removeExpression(expressionId, jwt) {
   }
 
   return (dispatch) => {
-    deleteExpression(expressionId, jwt).then((expressionId) => {
+    return query('delete', EXPRESSIONS_URL, data, jwt).then(() => {
       dispatch(handleGarbageClick(expressionId));
     });
   };
 }
 
-export function getExpressions(jwt) {
+export function getExpressions() {
+  const jwt = getJwt();
+
   function updateExpressions(expressions) {
     return {
       type: GET_EXPRESSIONS,
@@ -88,13 +108,18 @@ export function getExpressions(jwt) {
   }
 
   return (dispatch) => {
-    fetchExpressions(jwt).then((expressions) => {
-      dispatch(updateExpressions(expressions));
+    return query('get', EXPRESSIONS_URL, '', jwt).then((response) => {
+      dispatch(updateExpressions(response.data));
     });
   };
 }
 
-export function addExpression(expression, jwt) {
+export function addExpression(expression) {
+  const jwt = getJwt();
+  const body = {
+    e_value: expression,
+  };
+
   function updateExpressionId(expressionId) {
     return {
       type: UPDATE_EXPRESSION_ID,
@@ -103,8 +128,8 @@ export function addExpression(expression, jwt) {
   }
 
   return (dispatch) => {
-    insertExpression(expression, jwt).then((expressionId) => {
-      dispatch(updateExpressionId(expressionId));
+    return query('post', EXPRESSIONS_URL, body, jwt).then((response) => {
+      dispatch(updateExpressionId(response.data));
     });
   };
 }
@@ -118,6 +143,13 @@ export function setDisplay(buttonName) {
 
 export function register(userData) {
   const { username } = userData;
+  const body = {
+    user_name: username,
+    password: userData.password,
+    first_name: userData.firstname,
+    last_name: userData.lastname,
+    e_mail: userData.email,
+  };
 
   function request(user) {
     return { type: REGISTER_REQUEST, user };
@@ -131,10 +163,8 @@ export function register(userData) {
 
   return (dispatch) => {
     dispatch(request({ username }));
-    addUser(userData).then(
-      (user) => {
-        dispatch(success(user));
-      },
+    return query('post', REGISTER_URL, body).then(
+      dispatch(success({ username })),
       (error) => {
         dispatch(failure(error.toString()));
       },
