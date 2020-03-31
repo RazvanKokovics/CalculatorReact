@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import 'Components/ButtonPanel/condensed.css';
 import Button from 'Components/Button';
-import { firstButtonsCondensed } from 'Components/ButtonPanel/config';
+import { firstButtonsCondensed } from 'Components/config';
 
 class Condensed extends Component {
   static propTypes = {
@@ -12,6 +12,7 @@ class Condensed extends Component {
 
   render() {
     const { clickHandler } = this.props;
+
     return (
       <div className="condensed">
         {firstButtonsCondensed.map((button) => (

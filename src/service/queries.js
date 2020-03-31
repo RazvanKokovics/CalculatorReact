@@ -60,10 +60,10 @@ export function insertExpression(expression, jwt) {
       'auth-token': jwt,
     },
   };
-
   const body = {
     e_value: expression,
   };
+
   return axios
     .post('http://localhost:3002/api/expressions', body, config)
     .then((response) => {
@@ -71,5 +71,26 @@ export function insertExpression(expression, jwt) {
     })
     .catch((error) => {
       console.log(error);
+    });
+}
+
+export function addUser(userData) {
+  const body = {
+    user_name: userData.username,
+    password: userData.password,
+    first_name: userData.firstname,
+    last_name: userData.lastname,
+    e_mail: userData.email,
+  };
+
+  console.log(userData);
+  console.log(body);
+  return axios
+    .post('http://localhost:3002/user/register', body)
+    .then((response) => {
+      console.log(response);
+      return {
+        username: userData.username,
+      };
     });
 }

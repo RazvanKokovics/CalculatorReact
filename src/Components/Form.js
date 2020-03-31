@@ -8,62 +8,176 @@ import Grid from '@material-ui/core/Grid';
 import PropTypes from 'prop-types';
 
 class Form extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      register: false,
+    };
+
+    this.changeForm = this.changeForm.bind(this);
+  }
+
   static propTypes = {
     buttonHandler: PropTypes.func,
     opened: PropTypes.bool,
     handleChange: PropTypes.func,
-    handleSubmit: PropTypes.func,
+    handleRegister: PropTypes.func,
   };
 
-  render() {
-    const { opened } = this.props;
-    const { handleChange, handleSubmit } = this.props;
+  changeForm() {
+    const { register } = this.state;
 
-    return (
-      <Dialog open={opened} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">
-          <center>Log In</center>
-        </DialogTitle>
-        <DialogContent>
-          <form className="" noValidate onSubmit={handleSubmit}>
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  name="username"
-                  label="Username"
-                  onChange={handleChange}
-                />
+    this.setState({ register: !register });
+  }
+
+  render() {
+    const { opened, handleChange, handleRegister, buttonHandler } = this.props;
+    const { register } = this.state;
+
+    if (register) {
+      return (
+        <Dialog open={opened} aria-labelledby="form-dialog-title">
+          <DialogTitle id="form-dialog-title">
+            <center>Register</center>
+          </DialogTitle>
+          <DialogContent>
+            <form className="" noValidate onSubmit={handleRegister}>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
+                    name="username"
+                    label="Username"
+                    onChange={handleChange}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
+                    name="email"
+                    label="E-Mail"
+                    onChange={handleChange}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
+                    name="firstname"
+                    label="First Name"
+                    onChange={handleChange}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
+                    name="lastname"
+                    label="Last Name"
+                    onChange={handleChange}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
+                    name="password"
+                    label="Password"
+                    type="password"
+                    onChange={handleChange}
+                    autoComplete="current-password"
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <Button
+                    fullWidth
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                  >
+                    Submit
+                  </Button>
+                </Grid>
+                <Grid item xs={6}>
+                  <Button
+                    fullWidth
+                    onClick={this.changeForm}
+                    variant="contained"
+                    color="primary"
+                  >
+                    Log In
+                  </Button>
+                </Grid>
               </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  onChange={handleChange}
-                  autoComplete="current-password"
-                />
+            </form>
+          </DialogContent>
+        </Dialog>
+      );
+    } else {
+      return (
+        <Dialog open={opened} aria-labelledby="form-dialog-title">
+          <DialogTitle id="form-dialog-title">
+            <center>Log In</center>
+          </DialogTitle>
+          <DialogContent>
+            <form className="" noValidate onSubmit={buttonHandler}>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
+                    name="username"
+                    label="Username"
+                    onChange={handleChange}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
+                    name="password"
+                    label="Password"
+                    type="password"
+                    onChange={handleChange}
+                    autoComplete="current-password"
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <Button
+                    fullWidth
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                  >
+                    Submit
+                  </Button>
+                </Grid>
+                <Grid item xs={6}>
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    onClick={this.changeForm}
+                  >
+                    Register
+                  </Button>
+                </Grid>
               </Grid>
-              <Grid item xs={12}>
-                <Button
-                  fullWidth
-                  type="submit"
-                  variant="contained"
-                  color="primary"
-                >
-                  Log In
-                </Button>
-              </Grid>
-            </Grid>
-          </form>
-        </DialogContent>
-      </Dialog>
-    );
+            </form>
+          </DialogContent>
+        </Dialog>
+      );
+    }
   }
 }
 

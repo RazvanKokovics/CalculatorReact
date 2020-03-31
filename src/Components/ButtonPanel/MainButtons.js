@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import Button from 'Components/Button';
-import { buttons } from 'Components/ButtonPanel/config';
+import { buttons } from 'Components/config';
 
 class MainButtons extends Component {
   static propTypes = {
@@ -11,6 +11,7 @@ class MainButtons extends Component {
 
   render() {
     const { clickHandler } = this.props;
+
     return buttons.map((button) => (
       <Button
         name={button.name}

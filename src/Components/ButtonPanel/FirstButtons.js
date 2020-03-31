@@ -12,6 +12,7 @@ class FirstButtons extends Component {
 
   render() {
     const { extended, clickHandler } = this.props;
+
     if (!extended) {
       return <Condensed clickHandler={clickHandler} />;
     } else {
