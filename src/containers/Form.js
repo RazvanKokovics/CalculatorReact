@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Form from 'Components/Form';
-import { logIn } from 'actions';
+import { logIn, register } from 'actions';
 
 class ContainerForm extends React.PureComponent {
   constructor(props) {
@@ -12,17 +12,33 @@ class ContainerForm extends React.PureComponent {
     this.state = {
       username: '',
       password: '',
+      email: '',
+      firstname: '',
+      lastname: '',
       submitted: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
+    this.handleRegister = this.handleRegister.bind(this);
   }
 
   static propTypes = {
     opened: PropTypes.bool,
     buttonHandler: PropTypes.func,
+    registerButton: PropTypes.func,
   };
+
+  isValidUser(userData) {
+    const { firstname, lastname, password, username } = userData;
+
+    return (
+      password.length >= 5 &&
+      firstname.length >= 3 &&
+      lastname.length >= 3 &&
+      username.length >= 5
+    );
+  }
 
   handleChange(event) {
     const { name, value } = event.target;
@@ -30,16 +46,27 @@ class ContainerForm extends React.PureComponent {
     this.setState({ [name]: value });
   }
 
-  handleSubmit(event) {
+  handleLogin(event) {
     const { username, password } = this.state;
     const { buttonHandler } = this.props;
 
     event.preventDefault();
 
-    this.setState({ submitted: true });
-
     if (username && password) {
       buttonHandler(username, password);
+      this.setState({ submitted: true });
+    }
+  }
+
+  handleRegister(event) {
+    const { firstname, lastname, password, email, username } = this.state;
+    const userData = { firstname, lastname, password, email, username };
+    const { registerButton } = this.props;
+
+    event.preventDefault();
+
+    if (this.isValidUser(userData)) {
+      registerButton(userData);
     }
   }
 
@@ -49,9 +76,9 @@ class ContainerForm extends React.PureComponent {
     return (
       <Form
         opened={opened}
-        buttonHandler={this.buttonHandler}
+        buttonHandler={this.handleLogin}
         handleChange={this.handleChange}
-        handleSubmit={this.handleSubmit}
+        handleRegister={this.handleRegister}
       />
     );
   }
@@ -63,6 +90,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   buttonHandler: (username, password) => dispatch(logIn(username, password)),
+  registerButton: (userData) => dispatch(register(userData)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContainerForm);

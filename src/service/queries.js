@@ -5,6 +5,7 @@ export function login(username, password) {
     user_name: username,
     password: password,
   };
+
   return axios
     .post('http://localhost:3002/user/login', body)
     .then((response) => {
@@ -22,13 +23,14 @@ export function fetchExpressions(jwt) {
       'auth-token': jwt,
     },
   };
+
   return axios
     .get('http://localhost:3002/api/expressions', config)
     .then((response) => {
       return response.data;
     })
     .catch((error) => {
-      console.log(error.response.data);
+      console.log(error);
     });
 }
 
@@ -41,13 +43,14 @@ export function deleteExpression(expressionId, jwt) {
       'auth-token': jwt,
     },
   };
+
   return axios
     .delete('http://localhost:3002/api/expressions', config)
     .then(() => {
       return expressionId;
     })
     .catch((error) => {
-      console.log(error.response.data);
+      console.log(error);
     });
 }
 
@@ -60,12 +63,34 @@ export function insertExpression(expression, jwt) {
   const body = {
     e_value: expression,
   };
+
   return axios
     .post('http://localhost:3002/api/expressions', body, config)
     .then((response) => {
       return response.data;
     })
     .catch((error) => {
-      console.log(error.response.data);
+      console.log(error);
+    });
+}
+
+export function addUser(userData) {
+  const body = {
+    user_name: userData.username,
+    password: userData.password,
+    first_name: userData.firstname,
+    last_name: userData.lastname,
+    e_mail: userData.email,
+  };
+
+  console.log(userData);
+  console.log(body);
+  return axios
+    .post('http://localhost:3002/user/register', body)
+    .then((response) => {
+      console.log(response);
+      return {
+        username: userData.username,
+      };
     });
 }

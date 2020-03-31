@@ -1,8 +1,10 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
+import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
 import PropTypes from 'prop-types';
 
 import ExpressionsPanel from 'Components/ExpressionsPanel';
+import 'Components/ExpressionsPanel.css';
 import {
   handleExpressionClick,
   removeExpression,
@@ -86,8 +88,9 @@ class ContainerExpressionsPanel extends Component {
   };
 
   garbage = (expressionId) => {
-    const { jwt } = this.props;
-    this.props.garbageHandler(expressionId, jwt);
+    const { jwt, garbageHandler } = this.props;
+
+    garbageHandler(expressionId, jwt);
   };
 
   pageClick = (event) => {
@@ -104,8 +107,8 @@ class ContainerExpressionsPanel extends Component {
     }
   }
 
-  nextPageClick(numberOfPages) {
-    const { currentPage } = this.state;
+  nextPageClick() {
+    const { currentPage, numberOfPages } = this.state;
 
     if (currentPage < numberOfPages) {
       this.setState({ currentPage: currentPage + 1 });
@@ -113,8 +116,8 @@ class ContainerExpressionsPanel extends Component {
   }
 
   render() {
-    const { expressionsPerPage, currentPage } = this.state;
-    const { expressions } = this.props;
+    const { expressionsPerPage, currentPage, numberOfPages } = this.state;
+    const { expressions, clickHandler } = this.props;
     const indexOfLastExpression = currentPage * expressionsPerPage;
     const indexOfFirstExpression = indexOfLastExpression - expressionsPerPage;
 
@@ -123,18 +126,45 @@ class ContainerExpressionsPanel extends Component {
       indexOfLastExpression,
     );
 
+    // Page numbers
+    const pageNumbers = [];
+    for (let i = 1; i <= numberOfPages; i++) {
+      pageNumbers.push(i);
+    }
+
+    const renderPageNumbers = pageNumbers.map((number) => {
+      return (
+        <div
+          key={number}
+          id={number}
+          className="pagination-number"
+          onClick={this.pageClick}
+        >
+          {number}
+        </div>
+      );
+    });
+
     return (
-      <ExpressionsPanel
-        expressions={currentExpressions}
-        handleClick={this.props.clickHandler}
-        garbageClick={this.garbage}
-        expressionsPerPage={this.state.expressionsPerPage}
-        numberOfPages={this.state.numberOfPages}
-        currentPage={this.state.currentPage}
-        pageClick={this.pageClick}
-        previousPageClick={this.previousPageClick}
-        nextPageClick={this.nextPageClick}
-      />
+      <div id="expressions-panel">
+        <p id="title">Previous Expressions</p>
+        <ExpressionsPanel
+          expressions={currentExpressions}
+          handleClick={clickHandler}
+          garbageClick={this.garbage}
+        />
+        <div id="center">
+          <div id="pagination">
+            <div className="pagination-number" onClick={this.previousPageClick}>
+              <FaAngleLeft />
+            </div>
+            {renderPageNumbers}
+            <div className="pagination-number" onClick={this.nextPageClick}>
+              <FaAngleRight />
+            </div>
+          </div>
+        </div>
+      </div>
     );
   }
 }

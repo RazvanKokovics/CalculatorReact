@@ -1,4 +1,4 @@
-import calculate from '../service/calculate';
+import { calculate } from 'service/calculate';
 import {
   SET_DISPLAY,
   SET_EXPRESSION,

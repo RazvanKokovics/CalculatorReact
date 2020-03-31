@@ -1,7 +1,6 @@
 import { evaluate } from 'mathjs';
 
 let undoStack = [];
-undoStack.push();
 let redoStack = [];
 
 function isNumber(data) {
@@ -13,10 +12,7 @@ function operateString(str) {
 }
 
 function isOperation(str) {
-  if (str === '+' || str === '-' || str === '*' || str === '/') {
-    return true;
-  }
-  return false;
+  return str === '+' || str === '-' || str === '*' || str === '/';
 }
 
 function saveState(object) {
@@ -24,34 +20,41 @@ function saveState(object) {
   redoStack = [];
 }
 
-function validString(str) {
+export function validString(str) {
   let stack = [];
+
   if (str.length === 0) {
     return false;
   }
+
   for (let i = 0; i < str.length; i++) {
-    if (str[i] === '(') stack.push('(');
-    if (str[i] === ')') {
-      let p = stack.pop();
-      if (p !== '(') return false;
+    if (str[i] === '(') {
+      stack.push('(');
+    }
+    if (str[i] === ')' && stack.pop() !== '(') {
+      return false;
     }
   }
-  if (stack.length === 0) return true;
-  return false;
+
+  return stack.length === 0;
 }
 
 function sliceNumber(number) {
   let nr = number.toString();
-  if (nr[nr.length - 1] === '0') {
-    nr = nr.slice(0, nr.length - 1);
+  let count = 2;
+
+  while (count) {
     if (nr[nr.length - 1] === '0') {
-      nr = nr.slice(0, nr.length - 2);
+      nr = nr.slice(0, nr.length - 1);
     }
+    count--;
   }
+  nr = nr[nr.length - 1] !== '.' ? nr : nr.slice(0, nr.length - 1);
+
   return nr;
 }
 
-function calculate(obj, buttonName) {
+export function calculate(obj, buttonName) {
   if (buttonName === 'x') {
     buttonName = '*';
   }
@@ -81,10 +84,11 @@ function calculate(obj, buttonName) {
   //% Button
   if (buttonName === '%') {
     if (validString(obj.operationString)) {
-      saveState({ ...obj });
       let result1 = sliceNumber(operateString(obj.operationString).toFixed(2));
       let result2 = sliceNumber(operateString(result1 + '/100').toFixed(2));
       let expressions = addExpression(obj, obj.operationString);
+
+      saveState({ ...obj });
       return {
         result: true,
         total: result2,
@@ -96,6 +100,7 @@ function calculate(obj, buttonName) {
     }
     if (obj.result === true) {
       let res = sliceNumber(operateString(obj.total + '/100'));
+
       saveState({ ...obj });
       return {
         ...obj,
@@ -107,10 +112,11 @@ function calculate(obj, buttonName) {
   //+/- Button
   if (buttonName === '+/-') {
     if (validString(obj.operationString)) {
-      saveState({ ...obj });
       let res1 = sliceNumber(operateString(obj.operationString).toFixed(2));
       let res2 = sliceNumber(operateString('-' + res1).toFixed(2));
       let expressions = addExpression(obj, obj.operationString);
+
+      saveState({ ...obj });
       return {
         ...obj,
         result: true,
@@ -123,6 +129,7 @@ function calculate(obj, buttonName) {
     }
     if (obj.result === true) {
       let res = sliceNumber(operateString('-' + obj.total).toFixed(2));
+
       saveState({ ...obj });
       return {
         ...obj,
@@ -134,6 +141,7 @@ function calculate(obj, buttonName) {
   //() or number Button and takes the reult from previous calculus
   if (obj.result && (isNumber(buttonName) || '()'.includes(buttonName))) {
     saveState({ ...obj });
+
     return {
       ...obj,
       result: false,
@@ -144,6 +152,7 @@ function calculate(obj, buttonName) {
   //Operation or . Button and takes the result from previous calculus
   if (obj.result && '+.*/-'.includes(buttonName)) {
     saveState({ ...obj });
+
     return {
       ...obj,
       result: false,
@@ -154,13 +163,16 @@ function calculate(obj, buttonName) {
   //(). or Number Button, without result from previous calculus
   if (isNumber(buttonName) || '()+-/*.'.includes(buttonName)) {
     let l = obj.operationString.length;
+
     if (l === 0) {
       if ('0)+-/*'.includes(buttonName)) {
         return {
           ...obj,
         };
       }
+
       saveState({ ...obj });
+
       if (buttonName === '.') {
         return {
           ...obj,
@@ -175,8 +187,10 @@ function calculate(obj, buttonName) {
       };
     } else {
       let lastCharacter = obj.operationString[l - 1];
+
       if (isOperation(buttonName) && isOperation(lastCharacter)) {
         saveState({ ...obj });
+
         return {
           ...obj,
           operationString: obj.operationString.slice(0, l - 1) + buttonName,
@@ -211,8 +225,10 @@ function calculate(obj, buttonName) {
       };
     } else {
       let lastCharacter = obj.operationString[obj.operationString.length - 1];
+
       if (isNumber(lastCharacter)) {
         saveState({ ...obj });
+
         return {
           ...obj,
           operationString: obj.operationString + buttonName,
@@ -228,6 +244,7 @@ function calculate(obj, buttonName) {
   if (buttonName === 'AC') {
     undoStack = [];
     redoStack = [];
+
     return {
       ...obj,
       total: null,
@@ -261,6 +278,7 @@ function calculate(obj, buttonName) {
 
 function addExpression(obj, expression) {
   let expressions = [...obj.expressions];
+
   for (let i = 0; i < expressions.length; i++) {
     if (expressions[i].e_value === expression) {
       return expressions;
@@ -269,5 +287,3 @@ function addExpression(obj, expression) {
   expressions.push({ e_id: obj.expressionsCounter, e_value: expression });
   return expressions;
 }
-
-export default calculate;
