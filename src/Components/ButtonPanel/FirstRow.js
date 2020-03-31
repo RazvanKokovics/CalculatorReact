@@ -1,26 +1,26 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import 'Components/ButtonPanel/extended.css';
 import Button from 'Components/Button';
 
-class Extended extends Component {
+class FirstRow extends Component {
   static propTypes = {
     clickHandler: PropTypes.func,
     buttonConfig: PropTypes.array,
+    divClass: PropTypes.string,
   };
 
   render() {
-    const { clickHandler, buttonConfig } = this.props;
+    const { clickHandler, buttonConfig, divClass } = this.props;
 
     return (
-      <div className="extended">
+      <div className={divClass}>
         {buttonConfig.map((button) => (
           <Button
             name={button.name}
             clickHandler={() => clickHandler(button.name)}
             key={button.id}
-            class={'grid-item btn small-button ' + button.style}
+            class={'grid-item btn ' + button.style}
             value={button.value}
           />
         ))}
@@ -29,4 +29,4 @@ class Extended extends Component {
   }
 }
 
-export default Extended;
+export default FirstRow;

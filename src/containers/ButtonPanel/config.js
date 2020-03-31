@@ -25,12 +25,12 @@ const firstButtonsCondensed = [
 
 const firstButtonsExtended = [
   { id: 20, name: 'hide', style: 'grey1', value: 'arrowLeft' },
-  { id: 21, name: 'Undo', style: 'grey1', value: 'undo' },
-  { id: 22, name: 'AC', style: 'grey1' },
+  { id: 21, name: 'Undo', style: 'grey1 small-button', value: 'undo' },
+  { id: 22, name: 'AC', style: 'grey1 small-button' },
   { id: 23, name: '(', style: 'small-button ' },
   { id: 24, name: ')', style: 'small-button ' },
-  { id: 25, name: 'Redo', style: 'grey1', value: 'redo' },
-  { id: 26, name: '+/-', style: 'grey1' },
+  { id: 25, name: 'Redo', style: 'grey1 small-button', value: 'redo' },
+  { id: 26, name: '+/-', style: 'grey1 small-button' },
   { id: 27, name: '%', style: 'small-button ' },
   { id: 28, name: '/', style: 'small-button ' },
 ];

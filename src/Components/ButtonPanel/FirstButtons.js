@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import Condensed from 'Components/ButtonPanel/Condensed';
-import Extended from 'Components/ButtonPanel/Extended';
+import FirstRow from 'Components/ButtonPanel/FirstRow';
 
 class FirstButtons extends Component {
   static propTypes = {
@@ -16,16 +15,18 @@ class FirstButtons extends Component {
 
     if (!extended) {
       return (
-        <Condensed
+        <FirstRow
           clickHandler={clickHandler}
           buttonConfig={buttonConfig.firstButtonsCondensed}
+          divClass="condensed"
         />
       );
     } else {
       return (
-        <Extended
+        <FirstRow
           clickHandler={clickHandler}
           buttonConfig={buttonConfig.firstButtonsExtended}
+          divClass="extended"
         />
       );
     }
