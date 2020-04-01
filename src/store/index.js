@@ -16,8 +16,8 @@ export const store = createStore(
   persistedState,
   composeEnhancer(
     applyMiddleware(
-      authMiddleware,
       apiMiddleware,
+      authMiddleware,
       thunkMiddleware,
       loggerMiddleware,
     ),

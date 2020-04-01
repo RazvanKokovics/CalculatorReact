@@ -3,11 +3,13 @@ import {
   REMOVE_EXPRESSION,
   FETCH_EXPRESSIONS,
   UPDATE_EXPRESSION,
+  LOGIN,
 } from 'constants/actionTypes.js';
 import { query } from 'middlewares/query';
 import {
   EXPRESSIONS_URL,
   REGISTER_URL,
+  LOGIN_URL,
 } from 'middlewares/apiMiddleware/config';
 import { getJwt } from 'store/localStorage';
 import {
@@ -19,10 +21,25 @@ import {
   removeExpressionFailure,
   updateExpressionSuccess,
   updateExpressionFailure,
+  loginSuccess,
+  loginFailure,
 } from 'actions';
 
 const apiMiddleware = () => (next) => (action) => {
   switch (action.type) {
+    case LOGIN: {
+      query('post', LOGIN_URL, action.data).then(
+        (response) => {
+          const jwt = response.data;
+          next(loginSuccess(jwt, action.data.user_name));
+        },
+        (error) => {
+          next(loginFailure(error.toString()));
+        },
+      );
+      break;
+    }
+
     case REGISTER: {
       query('post', REGISTER_URL, action.data).then(
         next(registerSuccess()),

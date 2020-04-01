@@ -1,31 +1,22 @@
-import { LOGIN, LOGOUT } from 'constants/actionTypes.js';
-import { query } from 'middlewares/query';
-import { LOGIN_URL } from 'middlewares/authMiddleware/config';
-import { loginSuccess, loginFailure } from 'actions';
+import { LOGOUT, LOGIN_SUCCESS } from 'constants/actionTypes.js';
 
 const authMiddleware = () => (next) => (action) => {
   switch (action.type) {
-    case LOGIN: {
-      query('post', LOGIN_URL, action.data).then(
-        (response) => {
-          const jwt = response.data;
-
-          localStorage.setItem(
-            'user',
-            JSON.stringify({ jwt, username: action.data.user_name }),
-          );
-          next(loginSuccess(action.data.user_name));
-        },
-        (error) => {
-          next(loginFailure(error.toString()));
-        },
+    case LOGIN_SUCCESS: {
+      localStorage.setItem(
+        'user',
+        JSON.stringify({
+          jwt: action.jwt,
+          username: action.user.username,
+        }),
       );
+      next(action);
       break;
     }
 
     case LOGOUT: {
-      next(action);
       localStorage.removeItem('user');
+      next(action);
       break;
     }
 

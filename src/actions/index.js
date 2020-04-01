@@ -96,10 +96,11 @@ export function register(userData) {
   return { type: REGISTER, data };
 }
 
-export function loginSuccess(username) {
+export function loginSuccess(jwt, username) {
   return {
     type: LOGIN_SUCCESS,
     user: { username },
+    jwt,
   };
 }
 
