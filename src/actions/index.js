@@ -3,7 +3,7 @@ import {
   SET_EXTENDED,
   SET_DISPLAY,
   REMOVE_EXPRESSION,
-  LOGIN_REQUEST,
+  LOGIN,
   LOGOUT,
   FETCH_EXPRESSIONS,
   UPDATE_EXPRESSION,
@@ -35,7 +35,7 @@ export function logIn(username, password) {
     password,
   };
   return {
-    type: LOGIN_REQUEST,
+    type: LOGIN,
     data,
   };
 }

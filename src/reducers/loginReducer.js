@@ -1,9 +1,4 @@
-import {
-  LOGIN_REQUEST,
-  LOGIN_SUCCESS,
-  LOGIN_FAILURE,
-  LOGOUT,
-} from 'constants/actionTypes.js';
+import { LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT } from 'constants/actionTypes.js';
 
 const initialLogInState = {
   username: '',
@@ -14,9 +9,6 @@ export const loginReducer = (state = initialLogInState, action) => {
     case LOGIN_SUCCESS:
       console.log(action.user);
       return action.user;
-
-    case LOGIN_REQUEST:
-      return initialLogInState;
 
     case LOGIN_FAILURE:
       return initialLogInState;

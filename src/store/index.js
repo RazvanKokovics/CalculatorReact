@@ -4,7 +4,8 @@ import { createLogger } from 'redux-logger';
 
 import { rootReducer } from 'reducers';
 import { loadState } from 'store/localStorage';
-import apiMiddleware from 'apiMiddleware';
+import apiMiddleware from 'middlewares/apiMiddleware';
+import authMiddleware from 'middlewares/authMiddleware';
 
 const loggerMiddleware = createLogger();
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -14,6 +15,11 @@ export const store = createStore(
   rootReducer,
   persistedState,
   composeEnhancer(
-    applyMiddleware(apiMiddleware, thunkMiddleware, loggerMiddleware),
+    applyMiddleware(
+      authMiddleware,
+      apiMiddleware,
+      thunkMiddleware,
+      loggerMiddleware,
+    ),
   ),
 );
