@@ -1,11 +1,7 @@
-import {
-  LOGIN,
-  LOGIN_FAILURE,
-  LOGIN_SUCCESS,
-  LOGOUT,
-} from 'constants/actionTypes.js';
+import { LOGIN, LOGOUT } from 'constants/actionTypes.js';
 import { query } from 'middlewares/query';
 import { LOGIN_URL } from 'middlewares/authMiddleware/config';
+import { loginSuccess, loginFailure } from 'actions';
 
 const authMiddleware = () => (next) => (action) => {
   switch (action.type) {
@@ -18,13 +14,10 @@ const authMiddleware = () => (next) => (action) => {
             'user',
             JSON.stringify({ jwt, username: action.data.user_name }),
           );
-          next({
-            type: LOGIN_SUCCESS,
-            user: { username: action.data.user_name },
-          });
+          next(loginSuccess(action.data.user_name));
         },
         (error) => {
-          next({ type: LOGIN_FAILURE, error: error.toString() });
+          next(loginFailure(error.toString()));
         },
       );
       break;
