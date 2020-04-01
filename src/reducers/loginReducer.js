@@ -7,7 +7,6 @@ const initialLogInState = {
 export const loginReducer = (state = initialLogInState, action) => {
   switch (action.type) {
     case LOGIN_SUCCESS:
-      console.log(action.user);
       return action.user;
 
     case LOGIN_FAILURE:

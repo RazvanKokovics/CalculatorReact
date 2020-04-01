@@ -2,9 +2,12 @@ import { calculate } from 'service/calculate';
 import {
   SET_DISPLAY,
   SET_EXPRESSION,
-  DELETE_EXPRESSION,
-  GET_EXPRESSIONS,
-  UPDATE_EXPRESSION_ID,
+  REMOVE_EXPRESSION_SUCCESS,
+  REMOVE_EXPRESSION_FAILURE,
+  FETCH_EXPRESSIONS_SUCCESS,
+  FETCH_EXPRESSIONS_FAILURE,
+  UPDATE_EXPRESSION_SUCCESS,
+  UPDATE_EXPRESSION_FAILURE,
 } from 'constants/actionTypes.js';
 
 const initialCalculatorState = {
@@ -31,7 +34,7 @@ export const calculatorReducer = (state = initialCalculatorState, action) => {
         operationString: action.expressionValue,
       };
 
-    case DELETE_EXPRESSION:
+    case REMOVE_EXPRESSION_SUCCESS:
       return {
         ...state,
         expressions: state.expressions.filter(
@@ -39,18 +42,31 @@ export const calculatorReducer = (state = initialCalculatorState, action) => {
         ),
       };
 
-    case GET_EXPRESSIONS:
+    case REMOVE_EXPRESSION_FAILURE:
+      return state;
+
+    case FETCH_EXPRESSIONS_SUCCESS:
       return {
         ...state,
         expressions: action.expressions,
         expressionsCounter: action.expressions.length,
       };
 
-    case UPDATE_EXPRESSION_ID:
+    case FETCH_EXPRESSIONS_FAILURE:
+      return {
+        ...state,
+        expressions: [],
+        expressionsCounter: 0,
+      };
+
+    case UPDATE_EXPRESSION_SUCCESS:
       return {
         ...state,
         expressions: updateLastExpressionId(state.expressions, action.e_id),
       };
+
+    case UPDATE_EXPRESSION_FAILURE:
+      return state;
 
     default:
       return state;

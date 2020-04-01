@@ -7,7 +7,7 @@ import {
   LOGOUT,
   FETCH_EXPRESSIONS,
   UPDATE_EXPRESSION,
-  REGISTER_REQUEST,
+  REGISTER,
 } from 'constants/actionTypes.js';
 
 export function setExtended() {
@@ -83,5 +83,5 @@ export function register(userData) {
     last_name: userData.lastname,
     e_mail: userData.email,
   };
-  return { type: REGISTER_REQUEST, data };
+  return { type: REGISTER, data };
 }
