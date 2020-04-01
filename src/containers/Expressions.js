@@ -46,7 +46,11 @@ class ContainerExpressionsPanel extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { expressions } = this.props;
+    const { username, expressions, getExpressions } = this.props;
+
+    if (prevProps.username !== username && username) {
+      getExpressions();
+    }
 
     if (prevProps.expressions.length + 1 === expressions.length) {
       this.addLastExpression(expressions);

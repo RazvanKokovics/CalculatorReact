@@ -34,9 +34,6 @@ const apiMiddleware = (store) => (next) => (action) => {
             type: LOGIN_SUCCESS,
             user: { username: action.data.user_name },
           });
-          store.dispatch({
-            type: FETCH_EXPRESSIONS,
-          });
         },
         (error) => {
           store.dispatch({ type: LOGIN_FAILURE, error: error.toString() });
