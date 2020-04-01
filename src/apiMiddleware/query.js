@@ -1,7 +1,8 @@
 const axios = require('axios').default;
 
-export function query(method, url, data, jwt) {
+export function query(method, endpoint, data, jwt) {
   const headers = jwt ? { 'auth-token': jwt } : {};
+  const url = 'http://localhost:3002' + endpoint;
 
   return axios({
     method,
