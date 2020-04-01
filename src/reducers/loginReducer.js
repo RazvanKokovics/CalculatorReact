@@ -1,14 +1,7 @@
-import {
-  LOGIN_REQUEST,
-  LOGIN_SUCCESS,
-  LOGIN_FAILURE,
-  LOGOUT,
-} from 'constants/actionTypes.js';
+import { LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT } from 'constants/actionTypes.js';
 
 const initialLogInState = {
   username: '',
-  password: '',
-  jwt: '',
 };
 
 export const loginReducer = (state = initialLogInState, action) => {
@@ -16,26 +9,11 @@ export const loginReducer = (state = initialLogInState, action) => {
     case LOGIN_SUCCESS:
       return action.user;
 
-    case LOGIN_REQUEST:
-      return {
-        username: '',
-        password: '',
-        jwt: '',
-      };
-
     case LOGIN_FAILURE:
-      return {
-        username: '',
-        password: '',
-        jwt: '',
-      };
+      return initialLogInState;
 
     case LOGOUT:
-      return {
-        username: '',
-        password: '',
-        jwt: '',
-      };
+      return initialLogInState;
 
     default:
       return state;

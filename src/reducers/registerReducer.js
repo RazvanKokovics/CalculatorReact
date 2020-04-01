@@ -1,18 +1,11 @@
-import {
-  REGISTER_FAILURE,
-  REGISTER_REQUEST,
-  REGISTER_SUCCESS,
-} from 'constants/actionTypes.js';
+import { REGISTER_SUCCESS, REGISTER_FAILURE } from 'constants/actionTypes.js';
 
-const initialRegisterState = '';
+const initialRegisterState = false;
 
 export const registerReducer = (state = initialRegisterState, action) => {
   switch (action.type) {
-    case REGISTER_REQUEST:
-      return true;
-
     case REGISTER_SUCCESS:
-      return action.user.username;
+      return true;
 
     case REGISTER_FAILURE:
       return false;
