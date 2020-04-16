@@ -48,15 +48,19 @@ class NavigationBar extends Component {
       <nav className="navigation-bar">
         <ul className="float-left">
           <li>
-            <NavLink exact to="/">
+            <NavLink exact to="/" activeClassName="active">
               Home
             </NavLink>
           </li>
           <li>
-            <NavLink to="/equations/">Equations</NavLink>
+            <NavLink to="/equations/" activeClassName="active">
+              Equations
+            </NavLink>
           </li>
           <li>
-            <NavLink to="/statistics/">Statistics</NavLink>
+            <NavLink to="/statistics/" activeClassName="active">
+              Statistics
+            </NavLink>
           </li>
         </ul>
         <ul className="float-right">{userButtons()}</ul>

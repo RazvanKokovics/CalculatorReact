@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+
 .navigation-bar {
   padding: 0;
   margin: 0;
@@ -9,12 +11,13 @@
 .navigation-bar ul {
   display: flex;
   list-style: none;
-  height: 56px;
+  height: 65px;
   margin: auto;
 }
 
 .navigation-bar ul li,
 .navigation-bar ul a {
+  font-family: 'Montserrat', sans-serif;
   color: #fd9e2b;
   font-size: 20px;
   text-decoration: none;
@@ -37,7 +40,34 @@
   padding-left: 5%;
 }
 
-.float-left .active,
-.float-left a:hover {
+.float-left a {
+  text-transform: uppercase;
+  display: inline-block;
+  position: relative;
+  transition: all 1s ease-in;
+}
+
+.float-left a:focus,
+.active {
+  letter-spacing: 0.1em;
   color: white;
+  font-weight: 700;
+}
+
+.float-left a::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: 5px;
+  left: 0;
+  background-color: white;
+  transform-origin: bottom right;
+  transition: transform 0.5s ease-out;
+}
+
+.float-left a:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
 }
