@@ -39,9 +39,9 @@ export function logout() {
   };
 }
 
-export function logIn(username, password) {
+export function logIn(userName, password) {
   const data = {
-    user_name: username,
+    userName,
     password,
   };
   return {
@@ -50,9 +50,9 @@ export function logIn(username, password) {
   };
 }
 
-export function removeExpression(expressionId) {
+export function removeExpression(id) {
   const data = {
-    e_id: expressionId,
+    id,
   };
 
   return {
@@ -69,7 +69,7 @@ export function getExpressions() {
 
 export function addExpression(expression) {
   const data = {
-    e_value: expression,
+    value: expression,
   };
 
   return {
@@ -87,12 +87,13 @@ export function setDisplay(buttonName) {
 
 export function register(userData) {
   const data = {
-    user_name: userData.username,
+    userName: userData.username,
     password: userData.password,
-    first_name: userData.firstname,
-    last_name: userData.lastname,
-    e_mail: userData.email,
+    firstName: userData.firstname,
+    lastName: userData.lastname,
+    email: userData.email,
   };
+
   return { type: REGISTER, data };
 }
 
@@ -127,10 +128,10 @@ export function fetchExpressionsFailure(error) {
   return { type: FETCH_EXPRESSIONS_FAILURE, error };
 }
 
-export function removeExpressionSuccess(expressionId) {
+export function removeExpressionSuccess(id) {
   return {
     type: REMOVE_EXPRESSION_SUCCESS,
-    expressionId,
+    id,
   };
 }
 
@@ -138,10 +139,10 @@ export function removeExpressionFailure(error) {
   return { type: REMOVE_EXPRESSION_FAILURE, error };
 }
 
-export function updateExpressionSuccess(e_id) {
+export function updateExpressionSuccess(id) {
   return {
     type: UPDATE_EXPRESSION_SUCCESS,
-    e_id,
+    id,
   };
 }
 

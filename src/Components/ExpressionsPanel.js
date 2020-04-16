@@ -16,14 +16,11 @@ class ExpressionsPanel extends Component {
 
     const renderExpressions = expressions.map((expression) => {
       return (
-        <div className="entry-container" key={expression.e_id}>
-          <p onClick={() => handleClick(expression.e_value)} className="entry">
-            {expression.e_value}
+        <div className="entry-container" key={expression.id}>
+          <p onClick={() => handleClick(expression.value)} className="entry">
+            {expression.value}
           </p>
-          <div
-            className="to-right"
-            onClick={() => garbageClick(expression.e_id)}
-          >
+          <div className="to-right" onClick={() => garbageClick(expression.id)}>
             <FaTrashAlt />
           </div>
         </div>
