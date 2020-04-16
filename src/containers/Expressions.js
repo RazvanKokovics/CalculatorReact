@@ -65,7 +65,7 @@ class ContainerExpressionsPanel extends Component {
     const { addExpression } = this.props;
 
     if (expressions.length > 0) {
-      addExpression(expressions[expressions.length - 1].e_value);
+      addExpression(expressions[expressions.length - 1].value);
     }
   };
 

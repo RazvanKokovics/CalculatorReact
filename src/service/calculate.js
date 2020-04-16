@@ -67,6 +67,7 @@ export function calculate(obj, buttonName) {
       return object;
     }
     alert('Nothing to undo!');
+
     return obj;
   }
 
@@ -78,6 +79,7 @@ export function calculate(obj, buttonName) {
       return obj;
     }
     alert('Nothing to redo!');
+
     return obj;
   }
 
@@ -89,6 +91,7 @@ export function calculate(obj, buttonName) {
       let expressions = addExpression(obj, obj.operationString);
 
       saveState({ ...obj });
+
       return {
         result: true,
         total: result2,
@@ -102,6 +105,7 @@ export function calculate(obj, buttonName) {
       let res = sliceNumber(operateString(obj.total + '/100'));
 
       saveState({ ...obj });
+
       return {
         ...obj,
         total: res,
@@ -117,6 +121,7 @@ export function calculate(obj, buttonName) {
       let expressions = addExpression(obj, obj.operationString);
 
       saveState({ ...obj });
+
       return {
         ...obj,
         result: true,
@@ -131,6 +136,7 @@ export function calculate(obj, buttonName) {
       let res = sliceNumber(operateString('-' + obj.total).toFixed(2));
 
       saveState({ ...obj });
+
       return {
         ...obj,
         total: res,
@@ -180,6 +186,7 @@ export function calculate(obj, buttonName) {
           result: false,
         };
       }
+
       return {
         ...obj,
         operationString: obj.operationString + buttonName,
@@ -210,6 +217,7 @@ export function calculate(obj, buttonName) {
         };
       }
       saveState({ ...obj });
+
       return {
         ...obj,
         operationString: obj.operationString + buttonName,
@@ -235,6 +243,7 @@ export function calculate(obj, buttonName) {
           result: false,
         };
       }
+
       return {
         ...obj,
       };
@@ -261,6 +270,7 @@ export function calculate(obj, buttonName) {
       saveState({ ...obj });
       let result = sliceNumber(operateString(obj.operationString).toFixed(2));
       let expressions = addExpression(obj, obj.operationString);
+
       return {
         ...obj,
         result: true,
@@ -272,6 +282,7 @@ export function calculate(obj, buttonName) {
       };
     }
     alert('The string is not a valid expression');
+
     return;
   }
 }
@@ -280,10 +291,11 @@ function addExpression(obj, expression) {
   let expressions = [...obj.expressions];
 
   for (let i = 0; i < expressions.length; i++) {
-    if (expressions[i].e_value === expression) {
+    if (expressions[i].value === expression) {
       return expressions;
     }
   }
-  expressions.push({ e_id: obj.expressionsCounter, e_value: expression });
+  expressions.push({ id: obj.expressionsCounter, value: expression });
+
   return expressions;
 }

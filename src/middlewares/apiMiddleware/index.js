@@ -31,7 +31,7 @@ const apiMiddleware = () => (next) => (action) => {
       query('post', LOGIN_URL, action.data).then(
         (response) => {
           const jwt = response.data;
-          next(loginSuccess(jwt, action.data.user_name));
+          next(loginSuccess(jwt, action.data.userName));
         },
         (error) => {
           next(loginFailure(error.toString()));
@@ -63,9 +63,9 @@ const apiMiddleware = () => (next) => (action) => {
     }
 
     case REMOVE_EXPRESSION: {
-      query('delete', EXPRESSIONS_URL, action.data, getJwt()).then(
+      query('delete', EXPRESSIONS_URL + action.data.id, '', getJwt()).then(
         () => {
-          next(removeExpressionSuccess(action.data.e_id));
+          next(removeExpressionSuccess(action.data.id));
         },
         (error) => {
           next(removeExpressionFailure(error.toString()));
@@ -77,7 +77,7 @@ const apiMiddleware = () => (next) => (action) => {
     case UPDATE_EXPRESSION: {
       query('post', EXPRESSIONS_URL, action.data, getJwt()).then(
         (response) => {
-          next(updateExpressionSuccess(response.data));
+          next(updateExpressionSuccess(response.data.expression.id));
         },
         (error) => {
           next(updateExpressionFailure(error.toString()));

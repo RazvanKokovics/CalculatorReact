@@ -16,9 +16,9 @@ const initialCalculatorState = {
   history: 'History: ',
   operationString: '',
   expressions: [
-    { e_id: 0, e_value: '5+3' },
-    { e_id: 1, e_value: '12*6' },
-    { e_id: 2, e_value: '90/3*4' },
+    { id: 0, value: '5+3' },
+    { id: 1, value: '12*6' },
+    { id: 2, value: '90/3*4' },
   ],
   expressionsCounter: 3,
 };
@@ -38,7 +38,7 @@ export const calculatorReducer = (state = initialCalculatorState, action) => {
       return {
         ...state,
         expressions: state.expressions.filter(
-          (expression) => expression.e_id !== action.expressionId,
+          (expression) => expression.id !== action.id,
         ),
       };
 
@@ -62,7 +62,7 @@ export const calculatorReducer = (state = initialCalculatorState, action) => {
     case UPDATE_EXPRESSION_SUCCESS:
       return {
         ...state,
-        expressions: updateLastExpressionId(state.expressions, action.e_id),
+        expressions: updateLastExpressionId(state.expressions, action.id),
       };
 
     case UPDATE_EXPRESSION_FAILURE:
@@ -75,6 +75,7 @@ export const calculatorReducer = (state = initialCalculatorState, action) => {
 
 function updateLastExpressionId(expressionArray, expressionId) {
   let expressions = [...expressionArray];
-  expressions[expressions.length - 1].e_id = expressionId;
+  expressions[expressions.length - 1].id = expressionId;
+
   return expressions;
 }
