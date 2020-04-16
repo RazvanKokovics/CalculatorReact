@@ -23,6 +23,7 @@ import {
   updateExpressionFailure,
   loginSuccess,
   loginFailure,
+  handleForm,
 } from 'actions';
 
 const apiMiddleware = () => (next) => (action) => {
@@ -32,6 +33,7 @@ const apiMiddleware = () => (next) => (action) => {
         (response) => {
           const jwt = response.data;
           next(loginSuccess(jwt, action.data.userName));
+          next(handleForm());
         },
         (error) => {
           next(loginFailure(error.toString()));

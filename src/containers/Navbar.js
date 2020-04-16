@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
-import LoginPanel from '../Components/LoginPanel';
-import { logout } from '../actions';
+
+import NavBar from 'Components/Navbar';
+import { logout, handleForm } from 'actions';
 
 const mapStateToProps = (state) => ({
   username: state.userCredentials.username,
@@ -8,6 +9,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   logoutHandler: () => dispatch(logout()),
+  loginHandler: () => dispatch(handleForm()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginPanel);
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar);

@@ -1,0 +1,43 @@
+.navigation-bar {
+  padding: 0;
+  margin: 0;
+  position: fixed;
+  background-color: #373638;
+  width: 100%;
+}
+
+.navigation-bar ul {
+  display: flex;
+  list-style: none;
+  height: 56px;
+  margin: auto;
+}
+
+.navigation-bar ul li,
+.navigation-bar ul a {
+  color: #fd9e2b;
+  font-size: 20px;
+  text-decoration: none;
+  padding: 10px;
+  margin: auto;
+  text-align: center;
+}
+
+.content {
+  padding-top: 100px;
+}
+
+.float-right {
+  float: right;
+  padding-right: 5%;
+}
+
+.float-left {
+  float: left;
+  padding-left: 5%;
+}
+
+.float-left .active,
+.float-left a:hover {
+  color: white;
+}
