@@ -19,6 +19,12 @@ import {
   UPDATE_EXPRESSION_FAILURE,
   UPDATE_EXPRESSION_SUCCESS,
   HANDLE_FORM,
+  GET_EQUATION,
+  GET_EQUATION_SUCCESS,
+  GET_EQUATION_FAILURE,
+  SOLVE_EQUATION,
+  SOLVE_EQUATION_SUCCESS,
+  SOLVE_EQUATION_FAILURE,
 } from 'constants/actionTypes.js';
 
 export function setExtended() {
@@ -154,5 +160,49 @@ export function updateExpressionFailure(error) {
 export function handleForm() {
   return {
     type: HANDLE_FORM,
+  };
+}
+
+export function getEquation() {
+  return {
+    type: GET_EQUATION,
+  };
+}
+
+export function getEquationSuccess(equation) {
+  return {
+    type: GET_EQUATION_SUCCESS,
+    equation,
+  };
+}
+
+export function getEquationFailure(error) {
+  return {
+    type: GET_EQUATION_FAILURE,
+    error,
+  };
+}
+
+export function solveEquation(equationId, solution) {
+  return {
+    type: SOLVE_EQUATION,
+    data: {
+      equationId,
+      solution,
+    },
+  };
+}
+
+export function solveEquationSuccess(message) {
+  return {
+    type: SOLVE_EQUATION_SUCCESS,
+    message,
+  };
+}
+
+export function solveEquationFailure(error) {
+  return {
+    type: SOLVE_EQUATION_FAILURE,
+    error,
   };
 }
