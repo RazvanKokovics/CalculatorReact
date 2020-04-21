@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
 #title {
   font-size: 18px;
   color: #fd9e2b;
@@ -22,6 +24,7 @@
 }
 
 .entry-container {
+  font-family: 'Roboto', sans-serif;
   height: auto;
   display: flex;
   border-bottom: 1px solid grey;

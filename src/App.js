@@ -1,13 +1,25 @@
 import React, { Component } from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+
+import Calculator from 'Components/Calculator';
+import NavigationBar from 'containers/Navbar';
+import Statistics from 'containers/Statistics';
+import Equations from 'containers/Equations';
 import './App.css';
-import Calculator from './Components/Calculator';
 
 class App extends Component {
   render() {
     return (
-      <div className="app">
-        <Calculator />
-      </div>
+      <BrowserRouter>
+        <div className="App">
+          <NavigationBar />
+          <Switch>
+            <Route exact path="/" component={Calculator} />
+            <Route path="/equations" component={Equations} />
+            <Route path="/statistics" component={Statistics} />
+          </Switch>
+        </div>
+      </BrowserRouter>
     );
   }
 }

@@ -18,6 +18,7 @@ import {
   REMOVE_EXPRESSION_SUCCESS,
   UPDATE_EXPRESSION_FAILURE,
   UPDATE_EXPRESSION_SUCCESS,
+  HANDLE_FORM,
 } from 'constants/actionTypes.js';
 
 export function setExtended() {
@@ -148,4 +149,10 @@ export function updateExpressionSuccess(id) {
 
 export function updateExpressionFailure(error) {
   return { type: UPDATE_EXPRESSION_FAILURE, error };
+}
+
+export function handleForm() {
+  return {
+    type: HANDLE_FORM,
+  };
 }

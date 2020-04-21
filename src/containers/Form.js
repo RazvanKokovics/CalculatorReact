@@ -85,7 +85,7 @@ class ContainerForm extends React.PureComponent {
 }
 
 const mapStateToProps = (state) => ({
-  opened: state.userCredentials.username === '',
+  opened: state.form,
 });
 
 const mapDispatchToProps = (dispatch) => ({
