@@ -6,6 +6,9 @@ import {
   LOGIN,
   GET_EQUATION,
   SOLVE_EQUATION,
+  GET_USER_ROLE_STATISTIC,
+  GET_EXPRESSION_STATISTIC,
+  GET_EXPRESSION_USER_STATISTIC,
 } from 'constants/actionTypes.js';
 import { query } from 'middlewares/query';
 import {
@@ -13,6 +16,7 @@ import {
   REGISTER_URL,
   LOGIN_URL,
   EQUATION_URL,
+  STATISTIC_URL,
 } from 'middlewares/apiMiddleware/config';
 import { getJwt } from 'store/localStorage';
 import {
@@ -31,6 +35,12 @@ import {
   getEquationFailure,
   solveEquationFailure,
   solveEquationSuccess,
+  getUserRoleStatisticFailure,
+  getUserRoleStatisticSuccess,
+  getUserExpressionsStatisticFailure,
+  getUserExpressionsStatisticSuccess,
+  getExpressionUserStatisticSuccess,
+  getExpressionUserStatisticFailure,
 } from 'actions';
 
 const apiMiddleware = () => (next) => (action) => {
@@ -108,12 +118,48 @@ const apiMiddleware = () => (next) => (action) => {
     }
 
     case SOLVE_EQUATION: {
-      query('post', EQUATION_URL + '/solution', action.data, '').then(
+      query('post', EQUATION_URL + 'solution', action.data, '').then(
         (response) => {
           next(solveEquationSuccess(response.data.message));
         },
         (error) => {
           next(solveEquationFailure(error.toString()));
+        },
+      );
+      break;
+    }
+
+    case GET_USER_ROLE_STATISTIC: {
+      query('get', STATISTIC_URL + 'users/roles').then(
+        (response) => {
+          next(getUserRoleStatisticSuccess(response.data));
+        },
+        (error) => {
+          next(getUserRoleStatisticFailure(error.toString()));
+        },
+      );
+      break;
+    }
+
+    case GET_EXPRESSION_STATISTIC: {
+      query('get', STATISTIC_URL + 'users/expressions').then(
+        (response) => {
+          next(getUserExpressionsStatisticSuccess(response.data));
+        },
+        (error) => {
+          next(getUserExpressionsStatisticFailure(error.toString()));
+        },
+      );
+      break;
+    }
+
+    case GET_EXPRESSION_USER_STATISTIC: {
+      query('get', STATISTIC_URL + 'expressions/users').then(
+        (response) => {
+          next(getExpressionUserStatisticSuccess(response.data));
+        },
+        (error) => {
+          next(getExpressionUserStatisticFailure(error.toString()));
         },
       );
       break;
