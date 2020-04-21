@@ -1,0 +1,15 @@
+.statistic-content {
+  height: 80%;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.chart-container {
+  height: 100%;
+  width: 100%;
+  border-radius: 20px;
+
+  -webkit-box-shadow: 10px 10px 50px -20px rgba(0, 0, 0, 1);
+  -moz-box-shadow: 10px 10px 50px -20px rgba(0, 0, 0, 1);
+  box-shadow: 10px 10px 50px -20px rgba(0, 0, 0, 1);
+}

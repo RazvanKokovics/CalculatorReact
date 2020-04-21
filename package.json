@@ -5,10 +5,12 @@
   "dependencies": {
     "@material-ui/core": "^4.9.6",
     "@material-ui/icons": "^4.9.1",
+    "@material-ui/lab": "^4.0.0-alpha.50",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.4.1",
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.19.2",
+    "chart.js": "^2.9.3",
     "mathjs": "^6.6.1",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",

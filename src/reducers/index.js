@@ -5,6 +5,8 @@ import { calculatorExtendedReducer } from './calculatorExtendedReducer';
 import { loginReducer } from './loginReducer';
 import { registerReducer } from './registerReducer';
 import { formReducer } from './formReducer';
+import { equationReducer } from './equation';
+import { statisticReducer } from './statistic';
 
 export const rootReducer = combineReducers({
   calculation: calculatorReducer,
@@ -12,4 +14,6 @@ export const rootReducer = combineReducers({
   userCredentials: loginReducer,
   registered: registerReducer,
   form: formReducer,
+  equation: equationReducer,
+  statistic: statisticReducer,
 });
