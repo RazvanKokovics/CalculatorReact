@@ -50,10 +50,8 @@ class ContainerEquation extends React.PureComponent {
     if (!message) {
       return undefined;
     }
-    if (message === 'The solution is correct.') {
-      return true;
-    }
-    return false;
+
+    return message === 'The solution is correct.';
   }
 
   render() {
